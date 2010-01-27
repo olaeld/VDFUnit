@@ -1,0 +1,54 @@
+
+Body  {background-color: white; color: Black;
+       Margin-Top: 5px; Margin-Left: 5px;
+       font-family: Verdana, Tahoma, "MS sans serif", Arial; font-size: 10pt}
+Table {font-family: Verdana, Tahoma, "MS sans serif", Arial; font-size: 10pt}
+Input    {font-family: Verdana, Tahoma, "MS sans serif", Arial; font-size: 10pt}
+textarea {font-family: Verdana, Tahoma, "MS sans serif", Arial; font-size: 10pt}
+select   {font-family: Verdana, Tahoma, "MS sans serif", Arial; font-size: 10pt}
+td    {}
+tr    {}
+
+
+Form  {margin: 5px}
+
+hr    {height: 2px; color: gray}
+
+h3    { Padding: 3pt; Font-weight: 800; Font-Size: 12pt; Color: #000080; Background-Color: #99ccff}
+
+h4    { Padding: 3pt; Font-weight: 800; Font-Size: 10pt; Color: #000080 }
+
+
+.ActionButton {cursor: hand;}
+
+.footer {font-size: 8pt; margin: 2px}
+
+.Toolbar {}
+
+.Label  {color: #000080}
+
+.EntryBlock {background-color: lightyellow; margin: 0px; margin-bottom: 5px; border: groove thin;  padding: 8px}
+
+
+.EntryTable        {}
+.EntryTable .Data  {}
+.EntryTable .Error {color: #FF0000 }
+.EntryTable .Label {}
+
+.ReportTable         { Border: solid gray 1px; Border-top: none; background-color: lightyellow}
+.ReportTable .Data   { padding-left: 3px; padding-right: 3px}
+.ReportTable .Header { color: #000080; background-color: #c0c0c0; padding-left: 3px; padding-right: 3px }
+
+.ReportHdr1Table         {}
+.ReportHdr1Table .Data   {text-align: left;  vertical-align: top; }
+.ReportHdr1Table .Label  {text-align: left;  vertical-align: top; }
+
+.ZoomTable         {}
+.ZoomTable .Data   {text-align: left; vertical-align: top; padding-left: 3px; padding-right: 3px}
+.ZoomTable .Label  {text-align: left; vertical-align: top; color: #000080;  }
+.ZoomTable .Header {background-color: #c0c0c0; text-align: left; vertical-align: top; 3px; padding-left: padding-right: 3px}
+
+A:link    {color: #000080; }
+A:visited {color: #000080; }
+A:active  {color: #003366; }
+A:hover   {color: #003366; }

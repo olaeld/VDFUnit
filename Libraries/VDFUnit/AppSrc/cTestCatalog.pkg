@@ -1,0 +1,38 @@
+Use cArrayIteratorInteger.pkg
+
+Class cTestCatalog is a cArrayIteratorInteger
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Property Handle phParentTestFixture
+        Property Handle[] phTests
+        Set phParentTestFixture to (Parent(Self))
+    End_Procedure
+    
+    Procedure InitTestCatalog
+        Send CatalogTests
+    End_Procedure
+    
+    Procedure CatalogTests
+        Handle hTestNeighborhood hParentTestFixture
+        Handle[] hTests
+        Get phParentTestFixture to hParentTestFixture
+        Broadcast Recursive Send ReportTest to hParentTestFixture Self
+        Get phTests to hTests
+        Send AttachArray hTests
+    End_Procedure
+    
+    Procedure AddTestToCatalog Handle hTest
+        Handle[] hTests
+        Get phTests to hTests
+        Move hTest to hTests[SizeOfArray(hTests)]
+        Set phTests to hTests
+    End_Procedure
+    
+    Function CurrentTest Returns Handle
+        Integer iCurrent
+        Handle[] hTests
+        Get phTests to hTests
+        Get piCurrent to iCurrent
+        Function_Return (hTests[iCurrent])
+    End_Function
+End_Class

@@ -1,0 +1,19 @@
+Use cTestFixture.pkg
+Use cTest.pkg
+
+Object cObjectNameMixinTest is a cTestFixture
+    Object LastPartAfterFullStop_Tests is a cTest
+        Procedure Test
+            Send AssertSAreEqual "Lastname" (LastPartAfterFullStop(Self, "Firstname.Lastname"))
+            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, "."))
+            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, ".."))
+            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, ""))
+        End_Procedure
+    End_Object
+    
+    Object LastPartOfObjectName_Tests is a cTest
+        Procedure Test
+            Send AssertSAreEqual (Uppercase("LastPartOfObjectName_Tests")) (LastPartOfObjectName(Self, Self))
+        End_Procedure
+    End_Object
+End_Object

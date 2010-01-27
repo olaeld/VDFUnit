@@ -1,0 +1,9 @@
+Use VDFUnit.pkg
+
+Object FailingTestFixture is a cTestFixture
+    Object FailAssert is a cTest
+        Procedure Test
+            Send Assert False "This test is designed to fail."
+        End_Procedure
+    End_Object
+End_Object

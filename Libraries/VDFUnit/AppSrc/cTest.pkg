@@ -1,0 +1,41 @@
+Use cTestCatalog.pkg
+Use cObjectNameMixin.pkg
+Use cAssertMixin.pkg
+
+Class cTest is a cObject
+    Import_Class_Protocol cObjectNameMixin
+    Import_Class_Protocol cAssertMixin
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Property String psTestName
+    End_Procedure
+    
+    Procedure ReportTest Handle hTestFixtureCatalog
+        Send AddTestToCatalog to hTestFixtureCatalog Self
+    End_Procedure
+    
+    Function ObjectName Returns String
+        String sTestName
+        Get psTestName to sTestName
+        If (sTestName <> "") Function_Return sTestName
+        
+        Get LastPartOfObjectName Self to sTestName
+        Function_Return sTestName
+    End_Function
+    
+    Procedure RunTest
+        Send Setup
+        Send Test
+        Send TearDown
+    End_Procedure
+    
+    Procedure Test
+    End_Procedure
+    
+    Procedure Setup
+    End_Procedure
+    
+    Procedure TearDown
+    End_Procedure
+End_Class

@@ -1,0 +1,25 @@
+Use cTestFixtureCatalog.pkg
+Use cTestFixture.pkg
+Use cTest.pkg
+
+Class cTestFixtureRunner is a cObject
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Property Handle phTestFixtureCatalog
+    End_Procedure
+    
+    Procedure RunTestFixtures
+        Handle hTestFixtureCatalog hTestFixture
+        Get phTestFixtureCatalog to hTestFixtureCatalog
+        If (not(hTestFixtureCatalog)) Begin
+            Error DFERR_PROGRAM "phTestFixtureCatalog not defined for cTestRunner object"
+            Procedure_Return
+        End
+        
+        Send IteratorReset to hTestFixtureCatalog
+        While (IteratorMoveNext(hTestFixtureCatalog))
+            Get CurrentTestFixture of hTestFixtureCatalog to hTestFixture
+            Send RunTestFixture to hTestFixture
+        Loop
+    End_Procedure
+End_Class

@@ -1,0 +1,41 @@
+Use cArrayIteratorInteger.pkg
+
+Class cTestFixtureCatalog is a cArrayIteratorInteger
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Property Handle phTestFixtureNeighborhood
+        Property Handle[] phTestFixtures
+    End_Procedure
+    
+    Procedure InitTestFixtureCatalog
+        Send CatalogTestFixtures
+    End_Procedure
+    
+    Procedure CatalogTestFixtures
+        Handle hTestFixtureNeighborhood
+        Handle[] hTestFixtures
+        
+        //Reset array properties
+        Set phTestFixtures to hTestFixtures
+        
+        Get phTestFixtureNeighborhood to hTestFixtureNeighborhood
+        Broadcast Recursive Send ReportTestFixture to hTestFixtureNeighborhood Self
+        Get phTestFixtures to hTestFixtures
+        Send AttachArray hTestFixtures
+    End_Procedure
+    
+    Procedure AddTestFixtureToCatalog Handle hTestFixture
+        Handle[] hTestFixtures
+        Get phTestFixtures to hTestFixtures
+        Move hTestFixture to hTestFixtures[SizeOfArray(hTestFixtures)]
+        Set phTestFixtures to hTestFixtures
+    End_Procedure
+    
+    Function CurrentTestFixture Returns Handle
+        Integer iCurrent
+        Handle[] hTestFixtures
+        Get phTestFixtures to hTestFixtures
+        Get piCurrent to iCurrent
+        Function_Return (hTestFixtures[iCurrent])
+    End_Function
+End_Class

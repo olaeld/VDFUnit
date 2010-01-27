@@ -1,0 +1,47 @@
+/* this is an empty style sheet */
+
+td    {}
+tr    {}
+Body  {}
+Table {}
+Input    {}
+textarea {}
+select   {}
+Form  {}
+hr    {}
+h3    {}
+h4    {}
+
+.ActionButton {}
+
+.footer {}
+
+.Toolbar {}
+
+.Label  {}
+
+.EntryBlock {}
+
+
+.EntryTable        {}
+.EntryTable .Data  {}
+.EntryTable .Error {}
+.EntryTable .Label {}
+
+.ReportTable         {}
+.ReportTable .Data   {}
+.ReportTable .Header {}
+
+.ReportHdr1Table         {}
+.ReportHdr1Table .Data   {}
+.ReportHdr1Table .Label  {}
+
+.ZoomTable         {}
+.ZoomTable .Data   {}
+.ZoomTable .Label  {}
+.ZoomTable .Header {}
+
+A:link    {color: #990033; font-family: arial}
+A:visited {color: #990033; font-family: arial}
+A:active  {color: #003366; font-family: arial}
+A:hover   {color: #003366; font-family: arial}

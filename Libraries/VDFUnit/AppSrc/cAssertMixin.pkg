@@ -1,0 +1,42 @@
+Class cAssertMixin is a Mixin
+    Procedure Define_cObjectNameMixin
+    End_Procedure
+    
+    Procedure Assert Boolean bCondition String sAssertMessage
+        If bCondition Procedure_Return
+        
+        String sObjectName sErrorMessage
+        Get ObjectName to sObjectName
+        Move (sObjectName + ": Assert failed.") to sErrorMessage
+        If (num_arguments >= 2) Begin
+            Move (sErrorMessage * sAssertMessage) to sErrorMessage
+        End
+        Error DfErr_Program sErrorMessage
+    End_Procedure
+    
+    Procedure AssertIAreEqual Integer iExpected Integer iActual String sAssertMessage
+        If (iExpected = iActual) Procedure_Return
+        
+        String sObjectName sErrorMessage
+        Get ObjectName to sObjectName
+        Move (sObjectName + ": Expected:<" + String(iExpected) + ">") to sErrorMessage
+        Move (sErrorMessage + "but was:<" + String(iActual) + ">") to sErrorMessage
+        If (num_arguments >= 3) Begin
+            Move (sErrorMessage + "." * sAssertMessage) to sErrorMessage
+        End
+        Error DfErr_Program sErrorMessage
+    End_Procedure
+    
+    Procedure AssertSAreEqual String sExpected String sActual String sAssertMessage
+        If (sExpected = sActual) Procedure_Return
+        
+        String sObjectName sErrorMessage
+        Get ObjectName to sObjectName
+        Move (sObjectName + ": Expected:<" + sExpected + ">") to sErrorMessage
+        Move (sErrorMessage + "but was:<" + sActual + ">") to sErrorMessage
+        If (num_arguments >= 3) Begin
+            Move (sErrorMessage + "." * sAssertMessage) to sErrorMessage
+        End
+        Error DfErr_Program sErrorMessage
+    End_Procedure
+End_Class

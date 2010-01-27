@@ -1,0 +1,63 @@
+Use cTestFixtureCatalog.pkg
+Use cTestCatalog.pkg
+Use cObjectNameMixin.pkg
+Use cAssertMixin.pkg
+
+Class cTestFixture is a cObject
+    Import_Class_Protocol cObjectNameMixin
+    Import_Class_Protocol cAssertMixin
+    
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Property String psTestFixtureName
+        Property Handle phTestCatalog
+        
+        Object oTestCatalog is a cTestCatalog
+        End_Object
+        Set phTestCatalog to (oTestCatalog(Self))
+    End_Procedure
+    
+    Procedure ReportTests
+        Handle hTestCatalog
+        Get phTestCatalog to hTestCatalog
+        If (hTestCatalog = 0) Error DFERR_PROGRAM ("phTestCatalog undefined for" * Name(Self))
+        Else Send InitTestCatalog to hTestCatalog
+    End_Procedure
+    
+    Procedure ReportTestFixture Handle hTestFixtureCatalog
+        Send AddTestFixtureToCatalog to hTestFixtureCatalog Self
+        Send ReportTests
+    End_Function
+    
+    Function ObjectName Returns String
+        String sTestFixtureName
+        Get psTestFixtureName to sTestFixtureName
+        If (sTestFixtureName <> "") Function_Return sTestFixtureName
+        
+        Get LastPartOfObjectName Self to sTestFixtureName
+        Function_Return sTestFixtureName
+    End_Function
+    
+    Procedure RunTestFixture
+        Send Setup
+        Send RunTests
+        Send TearDown
+    End_Procedure
+    
+    Procedure Setup
+    End_Procedure
+    
+    Procedure RunTests
+        Handle hTestCatalog hTest
+        Get phTestCatalog to hTestCatalog
+        Send IteratorReset to hTestCatalog
+        While (IteratorMoveNext(hTestCatalog))
+            Get CurrentTest of hTestCatalog to hTest
+            Send RunTest to hTest
+        Loop
+    End_Procedure
+    
+    Procedure TearDown
+    End_Procedure
+    
+End_Class

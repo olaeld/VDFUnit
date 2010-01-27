@@ -1,0 +1,24 @@
+Class cObjectNameMixin is a Mixin
+    Procedure Define_cObjectNameMixin
+    End_Procedure
+    
+    Function LastPartAfterFullStop String sFullString Returns String
+        String sTmp
+        Integer iPos
+        Move sFullString to sTmp
+        Move (Pos(".", sTmp)) to iPos
+        While (iPos > 0)
+            Move (Mid(sTmp, Length(sTmp) - iPos, iPos + 1)) to sTmp
+            Move (Pos(".", sTmp)) to iPos
+        Loop
+        Function_Return sTmp
+    End_Function
+    
+    Function LastPartOfObjectName Handle hObject Returns String
+        String sFullName sLastPart
+        Get Name of hObject to sFullName
+        Get LastPartAfterFullStop sFullName to sLastPart
+        Function_Return sLastPart
+    End_Function
+    
+End_Class
