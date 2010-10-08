@@ -1,0 +1,52 @@
+td    {}
+tr    {}
+Body  {background-color: #f2f2f2; color: #000000; Margin-Top: 5px; Margin-Left: 5px;
+       font-family: arial; font-size: 12px}
+Table {font-family: arial; font-size: 12px}
+Input    {font-family: arial; font-size: 12px}
+textarea {font-family: arial; font-size: 12px}
+select   {font-family: arial; font-size: 12px}
+
+Form  {margin: 5px}
+hr    {height: 2px; color: gray}
+h3    {background-color: gray; color: white; font-family: arial; font-size: 18 px; font-weight: bold; padding: 5px;
+        margin-bottom: 5px}
+h4    {background-color: gray; color: white; font-family: arial; font-size: 16 px; font-weight: bold; padding: 5px;
+        margin-bottom: 5px}
+
+.ActionButton {border: #000000 1px solid; cursor: hand; font-size: 13 px}
+
+.footer {font-family: arial; font-size: 10 px; margin: 2px}
+
+.Toolbar {margin-top: 0px; margin-bottom: 5px; border-top-style: solid; background-color: silver; padding: 8px;  border-color: gray; 
+           border-bottom-style: solid ; border-width: 2px}
+
+.Label  {color: DarkBlue; font-family: arial; font-size: 12 px}
+
+.ErrorReport {color: Red; font-family: arial; font-size: 12 px; margin: 0px}
+
+.EntryBlock {Margin: 2px; border: solid gray 1px}
+
+
+.EntryTable        {}
+.EntryTable .Data  {font-family: arial; font-size: 13 px}
+.EntryTable .Error {color: #FF0000; font-family: arial; font-size: 12 px }
+.EntryTable .Label {color: DarkBlue; font-family: arial; font-size: 12 px; text-align: right}
+
+.ReportTable         {Border: solid gray 1px; Border-top: none}
+.ReportTable .Data   {font-family: arial; font-size: 12 px;  padding-left: 3px; padding-right: 3px}
+.ReportTable .Header {color: DarkBlue; background-color: silver; font-family: arial; font-size: 13 px;  padding-left: 3px; padding-right: 3px }
+
+.ReportHdr1Table         {margin-top: 10px}
+.ReportHdr1Table .Data   {text-align: left;  vertical-align: top; font-family: arial; font-size: 12 px; }
+.ReportHdr1Table .Label  {text-align: left;  vertical-align: top; font-family: arial; font-size: 12 px; }
+
+.ZoomTable         {}
+.ZoomTable .Data   {text-align: left; vertical-align: top; font-family: arial; font-size: 12 px;}
+.ZoomTable .Label  {text-align: left; vertical-align: top; color: DarkBlue; font-family: arial; font-size: 12 px;}
+.ZoomTable .Header {background-color: silver; text-align: left; vertical-align: top; font-family: arial; font-size: 12 px; }
+
+A:link    {color: #990033; font-family: arial}
+A:visited {color: #990033; font-family: arial}
+A:active  {color: #003366; font-family: arial}
+A:hover   {color: #003366; font-family: arial}

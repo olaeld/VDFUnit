@@ -1,840 +1,865 @@
-Compiling Program: C:\utvikling\ganymede\BRAVOPro VDF15\VDFUnit Testrunner Sample\AppSrc\VDFUnit TestRunner.src
+Compiling Program: C:\work\VDFUnit\VDFUnit Testrunner Sample\AppSrc\VDFUnit TestRunner.src
 Memory Available: 2147483647
 1>Use DFAllEnt.pkg
 Using pre-compiled package DFALLENT.PKG
-Including file: dfallent.pkd    (C:\Programfiler\Visual DataFlex 15.0\Pkg\dfallent.pkd)
-49616>
-49616>Object oApplication is a cApplication
-49618>//    Set psAutoOpenWorkspace to "Config.ws"
-49618>End_Object
-49619>
-49619>Object oMain is a Panel
-49621>    
-49621>    Property Boolean pbAutoRunTests Public True
-49623>    
-49623>    Set Label to "VDFUnit TestRunner"
-49624>    Set Size to 213 433
-49625>    
-49625>    Object oClientArea is a ClientArea
-49627>        Use VDFUnitTestRunner.vw
-Including file: VDFUnitTestRunner.vw    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\VDFUnitTestRunner.vw)
-49627>>>Use Windows.pkg
-49627>>>Use DFClient.pkg
-49627>>>Use cRichEdit.pkg
-Including file: cRichEdit.pkg    (C:\Programfiler\Visual DataFlex 15.0\Pkg\cRichEdit.pkg)
-49627>>>>>use Windows.pkg
-49627>>>>>Use cEdit_Mixin.pkg
-49627>>>>>
-49627>>>>>// DFO: cRichEdit.Dfo
-49627>>>>>// DFC: cRichEdit.Dfc
-49627>>>>>
-49627>>>>>// constants used for RichEdit Properties
-49627>>>>>// peAlignment 
-49627>>>>>Enum_List 
-49627>>>>>    Define alLeft   for 1 
-49627>>>>>    Define alRight  for 2 
-49627>>>>>    Define alCenter for 3 
-49627>>>>>End_Enum_List 
-49627>>>>>
-49627>>>>>// peBullets 
-49627>>>>>Enum_List 
-49627>>>>>    Define buNone 
-49627>>>>>    Define buBullets 
-49627>>>>>    Define buArabicNumbers 
-49627>>>>>    Define buLowerLetters 
-49627>>>>>    Define buUpperLetters 
-49627>>>>>    Define buLowerRomans 
-49627>>>>>    Define buUpperRomans 
-49627>>>>>End_Enum_List 
-49627>>>>>
-49627>>>>>// peBulletStyle 
-49627>>>>>Enum_List 
-49627>>>>>    Define busRightParen   for 0 
-49627>>>>>    Define busEncloseParen for 256 
-49627>>>>>    Define busPeriod       for 512 
-49627>>>>>    Define busNumberOnly   for 768 
-49627>>>>>    Define busNoDisplay    for 1024 
-49627>>>>>End_Enum_List
-49627>>>>>    
-49627>>>>>// peLineSpacingType
-49627>>>>>Enum_List 
-49627>>>>>    Define lstSingle
-49627>>>>>    Define lstSingleAndOneHalf
-49627>>>>>    Define lstDouble
-49627>>>>>End_Enum_List
-49627>>>>>
-49627>>>>>Class cRichEdit Is A DFBaseRichEdit
-49628>>>>>
-49628>>>>>    Procedure Construct_Object
-49630>>>>>        Forward Send Construct_Object
-49632>>>>>        Send Define_cEdit_Mixin
-49633>>>>>
-49633>>>>>        On_key Key_Ctrl+Key_B send ToggleBold
-49634>>>>>        On_key Key_Ctrl+Key_I send ToggleItalics
-49635>>>>>        On_key Key_Ctrl+Key_U send ToggleUnderline
-49636>>>>>
-49636>>>>>    End_Procedure // Construct_Object
-49637>>>>>
-49637>>>>>    Import_Class_Protocol cEdit_Mixin
-49638>>>>>    
-49638>>>>>    Procedure ToggleBold
-49640>>>>>        Set pbBold to (not(pbBold(self))) 
-49641>>>>>    end_procedure
-49642>>>>>    
-49642>>>>>    Procedure ToggleItalics
-49644>>>>>        Set pbItalics to (not(pbItalics(self))) 
-49645>>>>>    end_procedure
-49646>>>>>    
-49646>>>>>    Procedure ToggleUnderline
-49648>>>>>       Set pbUnderLine to (not(pbUnderLine(self))) 
-49649>>>>>    end_procedure
-49650>>>>>
-49650>>>>>End_Class
-49651>>>>>
-49651>>>Use cProgressBar.pkg
-Including file: cProgressBar.pkg    (C:\Programfiler\Visual DataFlex 15.0\Pkg\cProgressBar.pkg)
-49651>>>>>Use Windows.pkg
-49651>>>>>Use cWinControl.pkg
-49651>>>>>Use CommCtrl.pkg
-49651>>>>>
-49651>>>>>Type tPbRange
-49651>>>>>    Field tPbRange.iLow  as DWord
-49651>>>>>    Field tPbRange.iHigh as DWord
-49651>>>>>End_Type
-49651>>>>>
-49651>>>>>//{ OverrideProperty=pbEnabled DesignTime=False }
-49651>>>>>Class cProgressBar is a cWinControl
-49652>>>>>
-49652>>>>>    Procedure Construct_Object
-49654>>>>>        Forward Send Construct_Object
-49656>>>>>        Property Integer private_piMinimum
-49657>>>>>        Property Integer private_piMaximum   100
-49658>>>>>        Property Integer private_piAdvanceBy 10
-49659>>>>>        Property Integer private_piPosition
-49660>>>>>        Property Integer private_pbVertical  False
-49661>>>>>        Property Integer private_pbSmooth    False
-49662>>>>>        Property Integer private_piBackColor clDefault
-49663>>>>>        Property Integer private_piBarColor  clDefault
-49664>>>>>
-49664>>>>>        Send Define_ToolTip_Support_Mixin
-49665>>>>>
-49665>>>>>        Set External_Class_Name 'cVdfProgressBar' To 'msctls_progress32'
-49666>>>>>        Set Focus_Mode to NonFocusable
-49667>>>>>        Set Skip_State to True
-49668>>>>>        Set pbUseFormWindowHandle to False     // Must come after Define_ToolTip_Support_Mixin
-49669>>>>>    End_Procedure
-49670>>>>>
-49670>>>>>    Import_Class_Protocol ToolTip_Support_Mixin
-49671>>>>>
-49671>>>>>    Procedure Set piMinimum Integer iMin
-49673>>>>>        Integer iMax
-49673>>>>>
-49673>>>>>        Set private_piMinimum to iMin
-49674>>>>>        Get private_piMaximum To iMax
-49675>>>>>        Send Windows_Message PBM_SETRANGE32 iMin iMax
-49676>>>>>    End_Procedure
-49677>>>>>    Function piMinimum Returns Integer
-49679>>>>>        If (Window_Handle(self)) Function_Return (WindowsMessage(PBM_GETRANGE, 1, 0))
-49682>>>>>        Else Function_Return (private_piMinimum(self))
-49684>>>>>    End_Function
-49685>>>>>
-49685>>>>>    Procedure Set piMaximum Integer iMax
-49687>>>>>        Integer iMin
-49687>>>>>
-49687>>>>>        Set private_piMaximum to iMax
-49688>>>>>        Get private_piMinimum To iMin
-49689>>>>>        Send Windows_Message PBM_SETRANGE32 iMin iMax
-49690>>>>>    End_Procedure
-49691>>>>>    Function piMaximum Returns Integer
-49693>>>>>        If (Window_Handle(self)) Function_Return (WindowsMessage(PBM_GETRANGE, 0, 0))
-49696>>>>>        Else Function_Return (private_piMaximum(self))
-49698>>>>>    End_Function
-49699>>>>>
-49699>>>>>    Procedure Set piAdvanceBy Integer iAdvanceBy
-49701>>>>>        Set private_piAdvanceBy To iAdvanceBy
-49702>>>>>        Send Windows_Message PBM_SETSTEP iAdvanceBy 0
-49703>>>>>    End_Procedure
-49704>>>>>    Function piAdvanceBy Returns Integer
-49706>>>>>        Function_Return (private_piAdvanceBy(self))
-49707>>>>>    End_Function
-49708>>>>>
-49708>>>>>    Procedure Set piPosition Integer iPos
-49710>>>>>        Set private_piPosition To iPos
-49711>>>>>        Send Windows_Message PBM_SETPOS iPos 0
-49712>>>>>    End_Procedure
-49713>>>>>
-49713>>>>>    Function piPosition Returns Integer
-49715>>>>>        If (Window_Handle(self)) Function_Return (WindowsMessage(PBM_GETPOS, 0, 0))
-49718>>>>>        Else Function_Return (private_piPosition(self))
-49720>>>>>    End_Function
-49721>>>>>
-49721>>>>>    Procedure Set pbVertical Boolean bVertical
-49723>>>>>        If (private_pbVertical(self) <> bVertical) Begin
-49725>>>>>            Set private_pbVertical To bVertical
-49726>>>>>           Send DoRecreateWindow
-49727>>>>>        End
-49727>>>>>>
-49727>>>>>    End_Procedure
-49728>>>>>
-49728>>>>>    Function pbVertical Returns Boolean
-49730>>>>>        Function_Return (private_pbVertical(self))
-49731>>>>>    End_Function
-49732>>>>>
-49732>>>>>    Procedure Set pbSmooth Boolean bSmooth
-49734>>>>>        If (private_pbSmooth(self) <> bSmooth) Begin
-49736>>>>>           Set private_pbSmooth To bSmooth
-49737>>>>>           Send DoRecreateWindow
-49738>>>>>        End
-49738>>>>>>
-49738>>>>>    End_Procedure
-49739>>>>>    Function pbSmooth Returns Boolean
-49741>>>>>        Function_Return (private_pbSmooth(self))
-49742>>>>>    End_Function
-49743>>>>>
-49743>>>>>    Procedure Set piBackColor Integer rgbColor
-49745>>>>>        Set private_piBackColor To rgbColor
-49746>>>>>        Send Windows_Message PBM_SETBKCOLOR 0 rgbColor
-49747>>>>>    End_Procedure
-49748>>>>>    Function piBackColor Returns Integer
-49750>>>>>        Function_Return (private_piBackColor(self))
-49751>>>>>    End_Function
-49752>>>>>
-49752>>>>>    Procedure Set piBarColor Integer rgbColor
-49754>>>>>        Set private_piBarColor To rgbColor
-49755>>>>>        Send Windows_Message PBM_SETBARCOLOR 0 rgbColor
-49756>>>>>    End_Procedure
-49757>>>>>    Function piBarColor Returns Integer
-49759>>>>>        Function_Return (private_piBarColor(self))
-49760>>>>>    End_Function
-49761>>>>>
-49761>>>>>    Procedure DoAdvance
-49763>>>>>        Send Windows_Message PBM_STEPIT 0 0
-49764>>>>>    End_procedure
-49765>>>>>
-49765>>>>>    Procedure DoAdvanceBy  Integer iAdvanceBy
-49767>>>>>        Send Windows_Message PBM_DELTAPOS iAdvanceBy 0
-49768>>>>>    End_procedure
-49769>>>>>
-49769>>>>>    Procedure private_DoInitWindow
-49771>>>>>        Set piBarColor  To (private_piBarColor(self))
-49772>>>>>        Set piBackColor To (private_piBackColor(self))
-49773>>>>>        Set piAdvanceBy To (private_piAdvanceBy(self))
-49774>>>>>        Set piMinimum   To (private_piMinimum(self))
-49775>>>>>        Set piMaximum   To (private_piMaximum(self))
-49776>>>>>        Set piPosition  To (private_piPosition(self))
-49777>>>>>    End_Procedure
-49778>>>>>
-49778>>>>>    Procedure Page_Object Integer iState
-49780>>>>>        Handle hWnd
-49780>>>>>
-49780>>>>>        Get Window_Handle To hWnd
-49781>>>>>        If (hWnd=0 and iState) Begin
-49783>>>>>            Set Window_Style To PBS_VERTICAL (private_pbVertical(self))
-49784>>>>>            Set Window_Style To PBS_SMOOTH   (private_pbSmooth(self))
-49785>>>>>            Forward Send Page_Object True
-49787>>>>>        End
-49787>>>>>>
-49787>>>>>        Else Forward Send Page_Object iState
-49790>>>>>     
-49790>>>>>        // Handle tooltip support....
-49790>>>>>        If (iState = 0) Begin
-49792>>>>>            Send RequestDeleteToolTip
-49793>>>>>        End 
-49793>>>>>>
-49793>>>>>        Else Begin
-49794>>>>>            Send RequestAddToolTip
-49795>>>>>        End
-49795>>>>>>
-49795>>>>>    End_Procedure
-49796>>>>>
-49796>>>>>    Procedure Page Integer iState
-49798>>>>>        Forward Send Page iState
-49800>>>>>        If (iState =1) Send private_DoInitWindow
-49803>>>>>    End_Procedure
-49804>>>>>
-49804>>>>>    // Called by Page_Object. Handles tooltip creation. We use a dedicated
-49804>>>>>    // method to perform AddToolTip because it is often the case that Page_Object
-49804>>>>>    // is implemented in a mixin class.
-49804>>>>>    Procedure RequestAddToolTip
-49806>>>>>        Send AddToolTip
-49807>>>>>    End_Procedure  // RequestAddToolTip
-49808>>>>>
-49808>>>>>
-49808>>>>>    // Called by Page_Object. Handles tooltip removal. 
-49808>>>>>    Procedure RequestDeleteToolTip
-49810>>>>>        Send DeleteToolTip
-49811>>>>>    End_Procedure // RequestDeleteToolTip
-49812>>>>>End_Class
-49813>>>Use VDFUnit.pkg
-Including file: VDFUnit.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\VDFUnit.pkg)
-49813>>>>>Use cTestFixture.pkg
-Including file: cTestFixture.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\cTestFixture.pkg)
-49813>>>>>>>Use cTestFixtureCatalog.pkg
-Including file: cTestFixtureCatalog.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\cTestFixtureCatalog.pkg)
-49813>>>>>>>>>Use cArrayIteratorInteger.pkg
-Including file: cArrayIteratorInteger.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFPatterns\AppSrc\cArrayIteratorInteger.pkg)
-49813>>>>>>>>>>>Use cArrayIterator.pkg
-Including file: cArrayIterator.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFPatterns\AppSrc\cArrayIterator.pkg)
-49813>>>>>>>>>>>>>Use cIterator_Mixin.pkg
-Including file: cIterator_Mixin.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFPatterns\AppSrc\cIterator_Mixin.pkg)
-49813>>>>>>>>>>>>>>>//Iterator pattern interface. Classes importing this class protocol need to 
-49813>>>>>>>>>>>>>>>//implement the IteratorMoveNext function.
-49813>>>>>>>>>>>>>>>//
-49813>>>>>>>>>>>>>>>//
-49813>>>>>>>>>>>>>>>//@author Ola Eld›y
-49813>>>>>>>>>>>>>>>Use VdfBase.pkg
-49813>>>>>>>>>>>>>>>
-49813>>>>>>>>>>>>>>>Class cIterator_Mixin is a Mixin
-49814>>>>>>>>>>>>>>>
-49814>>>>>>>>>>>>>>>    //Doc/ Interface=Private
-49814>>>>>>>>>>>>>>>    Procedure Define_cIterator_Mixin
-49816>>>>>>>>>>>>>>>        //Points to the current element in the collection. This can be used as
-49816>>>>>>>>>>>>>>>        //an object handle, an item number, a Recnum or whatever (as long as
-49816>>>>>>>>>>>>>>>        //it's an integer (a handle is also an integer).
-49816>>>>>>>>>>>>>>>        Property Integer piCurrent
-49817>>>>>>>>>>>>>>>    End_Procedure // Construct_Object
-49818>>>>>>>>>>>>>>>    
-49818>>>>>>>>>>>>>>>    Procedure IteratorReset_Mixin
-49820>>>>>>>>>>>>>>>        set piCurrent to -1
-49821>>>>>>>>>>>>>>>    End_Procedure
-49822>>>>>>>>>>>>>>>    
-49822>>>>>>>>>>>>>>>    //Resets to first element in collection
-49822>>>>>>>>>>>>>>>    //Doc/ Interface=Public
-49822>>>>>>>>>>>>>>>    Procedure IteratorReset
-49824>>>>>>>>>>>>>>>        Send IteratorReset_Mixin
-49825>>>>>>>>>>>>>>>    End_Procedure // IteratorReset
-49826>>>>>>>>>>>>>>>    
-49826>>>>>>>>>>>>>>>    //Find next element in collection
-49826>>>>>>>>>>>>>>>    //@return If next element is found: True. If not: False
-49826>>>>>>>>>>>>>>>    //Doc/ Interface=Public
-49826>>>>>>>>>>>>>>>    Function IteratorMoveNext Returns Boolean
-49828>>>>>>>>>>>>>>>        //Implement code to find next element in collection, then set piCurrent
-49828>>>>>>>>>>>>>>>        //to point to this element. Return true if found.
-49828>>>>>>>>>>>>>>>        Function_return False
-49829>>>>>>>>>>>>>>>    End_Function // IteratorReset
-49830>>>>>>>>>>>>>>>    
-49830>>>>>>>>>>>>>>>    Function IteratorCurrent_Mixin Returns Integer
-49832>>>>>>>>>>>>>>>        Function_Return (piCurrent(self))
-49833>>>>>>>>>>>>>>>    End_Function
-49834>>>>>>>>>>>>>>>    
-49834>>>>>>>>>>>>>>>    //Doc/Interface=Public
-49834>>>>>>>>>>>>>>>    //@return Points to current element 
-49834>>>>>>>>>>>>>>>    Function IteratorCurrent Returns Integer
-49836>>>>>>>>>>>>>>>        Function_Return (IteratorCurrent_Mixin(self))
-49837>>>>>>>>>>>>>>>    End_Function // IteratorCurrent
-49838>>>>>>>>>>>>>>>    
-49838>>>>>>>>>>>>>>>End_Class
-49839>>>>>>>>>>>>>>>
-49839>>>>>>>>>>>>>>>//Here is the syntax for using this Mixin class in your own class:
-49839>>>>>>>>>>>>>>>//
-49839>>>>>>>>>>>>>>>//Use cIterator_Mixin.pkg // our mixin class package
-49839>>>>>>>>>>>>>>>//Class cYourClass is a cSomething
-49839>>>>>>>>>>>>>>>//    Procedure Construct_Object
-49839>>>>>>>>>>>>>>>//        Forward Send Construct_Object
-49839>>>>>>>>>>>>>>>//        :
-49839>>>>>>>>>>>>>>>//        send Define_cIterator_Mixin // Constructor method
-49839>>>>>>>>>>>>>>>//    End_Procedure
-49839>>>>>>>>>>>>>>>//    :
-49839>>>>>>>>>>>>>>>//    Import_Class_Protocol cIterator_Mixin
-49839>>>>>>>>>>>>>>>//    :
-49839>>>>>>>>>>>>>>>//End_Class
-49839>>>>>>>>>>>>>
-49839>>>>>>>>>>>>>//This is an iterator object that attaches to an array. Use the procedure
-49839>>>>>>>>>>>>>//AttachArray to attach an array variable. Then the Iterator interface is
-49839>>>>>>>>>>>>>//available for the array by using the cArrayIterator object.
-49839>>>>>>>>>>>>>//The class is abstract, and needs to be instantiated by using the various
-49839>>>>>>>>>>>>>//array type subclasses, e.g. cArrayIteratorString, cArrayIteratorInteger
-49839>>>>>>>>>>>>>//Doc/Classtype=Abstract 
-49839>>>>>>>>>>>>>Class cArrayIterator is a cObject
-49840>>>>>>>>>>>>>    //Doc/Interface=Private
-49840>>>>>>>>>>>>>    Procedure Construct_Object
-49842>>>>>>>>>>>>>        Forward Send Construct_Object
-49844>>>>>>>>>>>>>        send Define_cIterator_Mixin // Constructor method
-49845>>>>>>>>>>>>>        
-49845>>>>>>>>>>>>>        Property Integer piArrayType
-49846>>>>>>>>>>>>>        Property String[] psArray
-49847>>>>>>>>>>>>>    End_Procedure
-49848>>>>>>>>>>>>>    
-49848>>>>>>>>>>>>>    Import_Class_Protocol cIterator_Mixin
-49849>>>>>>>>>>>>>    
-49849>>>>>>>>>>>>>    //Attaches an array variable to the cArrayIterator object.
-49849>>>>>>>>>>>>>    //This procedure has to be instantiated in the various array type subclasses
-49849>>>>>>>>>>>>>    //Doc/Interface=Virtual
-49849>>>>>>>>>>>>>    Procedure AttachArray
-49851>>>>>>>>>>>>>        
-49851>>>>>>>>>>>>>    End_Procedure // AttachArray
-49852>>>>>>>>>>>>>     
-49852>>>>>>>>>>>>>End_Class       // cArrayIterator
-49853>>>>>>>>>>>
-49853>>>>>>>>>>>//Integer array instantiation class of cArrayIterator
-49853>>>>>>>>>>>Class cArrayIteratorInteger is a cArrayIterator
-49854>>>>>>>>>>>    Procedure Construct_Object
-49856>>>>>>>>>>>        Forward Send Construct_Object
-49858>>>>>>>>>>>        Property Integer[] piArray
-49859>>>>>>>>>>>    End_Procedure // Construct_Object
-49860>>>>>>>>>>>    
-49860>>>>>>>>>>>    //Attaches an array variable to the cArrayIterator object. After updating
-49860>>>>>>>>>>>    //the array, this procedure needs to be called before using any part of the
-49860>>>>>>>>>>>    //iterator interface. 
-49860>>>>>>>>>>>    //@param iArray Integer Array variable to attach
-49860>>>>>>>>>>>    Procedure AttachArray Integer[] iArray
-49862>>>>>>>>>>>        set piArray to iArray
-49863>>>>>>>>>>>    End_Procedure // AttachArray
-49864>>>>>>>>>>>
-49864>>>>>>>>>>>    //Find next element in collection
-49864>>>>>>>>>>>    //@return If next element is found: True. If not: False
-49864>>>>>>>>>>>    //Doc/ Interface=Public
-49864>>>>>>>>>>>    Function IteratorMoveNext Returns Boolean
-49866>>>>>>>>>>>        Integer iCurrent
-49866>>>>>>>>>>>        Integer[] iArray
-49867>>>>>>>>>>>        get piArray to iArray
-49868>>>>>>>>>>>        //Implement code to find next element in collection, then set piCurrent
-49868>>>>>>>>>>>        //to point to this element. Return true if found.
-49868>>>>>>>>>>>        get piCurrent to iCurrent
-49869>>>>>>>>>>>        If (iCurrent >= (SizeOfArray(iArray) - 1)) Function_return False
-49872>>>>>>>>>>>        Else Begin
-49873>>>>>>>>>>>            Set piCurrent to (iCurrent + 1)
-49874>>>>>>>>>>>            Function_Return True
-49875>>>>>>>>>>>        End
-49875>>>>>>>>>>>>
-49875>>>>>>>>>>>    End_Function // IteratorReset
-49876>>>>>>>>>>>
-49876>>>>>>>>>>>End_Class   // cArrayIteratorInteger
-49877>>>>>>>>>
-49877>>>>>>>>>Class cTestFixtureCatalog is a cArrayIteratorInteger
-49878>>>>>>>>>    Procedure Construct_Object
-49880>>>>>>>>>        Forward Send Construct_Object
-49882>>>>>>>>>        Property Handle phTestFixtureNeighborhood
-49883>>>>>>>>>        Property Handle[] phTestFixtures
-49884>>>>>>>>>    End_Procedure
-49885>>>>>>>>>    
-49885>>>>>>>>>    Procedure InitTestFixtureCatalog
-49887>>>>>>>>>        Send CatalogTestFixtures
-49888>>>>>>>>>    End_Procedure
-49889>>>>>>>>>    
-49889>>>>>>>>>    Procedure CatalogTestFixtures
-49891>>>>>>>>>        Handle hTestFixtureNeighborhood
-49891>>>>>>>>>        Handle[] hTestFixtures
-49892>>>>>>>>>        
-49892>>>>>>>>>        //Reset array properties
-49892>>>>>>>>>        Set phTestFixtures to hTestFixtures
-49893>>>>>>>>>        
-49893>>>>>>>>>        Get phTestFixtureNeighborhood to hTestFixtureNeighborhood
-49894>>>>>>>>>        Broadcast Recursive Send ReportTestFixture to hTestFixtureNeighborhood Self
-49896>>>>>>>>>        Get phTestFixtures to hTestFixtures
-49897>>>>>>>>>        Send AttachArray hTestFixtures
-49898>>>>>>>>>    End_Procedure
-49899>>>>>>>>>    
-49899>>>>>>>>>    Procedure AddTestFixtureToCatalog Handle hTestFixture
-49901>>>>>>>>>        Handle[] hTestFixtures
-49902>>>>>>>>>        Get phTestFixtures to hTestFixtures
-49903>>>>>>>>>        Move hTestFixture to hTestFixtures[SizeOfArray(hTestFixtures)]
-49904>>>>>>>>>        Set phTestFixtures to hTestFixtures
-49905>>>>>>>>>    End_Procedure
-49906>>>>>>>>>    
-49906>>>>>>>>>    Function CurrentTestFixture Returns Handle
-49908>>>>>>>>>        Integer iCurrent
-49908>>>>>>>>>        Handle[] hTestFixtures
-49909>>>>>>>>>        Get phTestFixtures to hTestFixtures
-49910>>>>>>>>>        Get piCurrent to iCurrent
-49911>>>>>>>>>        Function_Return (hTestFixtures[iCurrent])
-49912>>>>>>>>>    End_Function
-49913>>>>>>>>>End_Class
-49914>>>>>>>Use cTestCatalog.pkg
-Including file: cTestCatalog.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\cTestCatalog.pkg)
-49914>>>>>>>>>Use cArrayIteratorInteger.pkg
-49914>>>>>>>>>
-49914>>>>>>>>>Class cTestCatalog is a cArrayIteratorInteger
-49915>>>>>>>>>    Procedure Construct_Object
-49917>>>>>>>>>        Forward Send Construct_Object
-49919>>>>>>>>>        Property Handle phParentTestFixture
-49920>>>>>>>>>        Property Handle[] phTests
-49921>>>>>>>>>        Set phParentTestFixture to (Parent(Self))
-49922>>>>>>>>>    End_Procedure
-49923>>>>>>>>>    
-49923>>>>>>>>>    Procedure InitTestCatalog
-49925>>>>>>>>>        Send CatalogTests
-49926>>>>>>>>>    End_Procedure
-49927>>>>>>>>>    
-49927>>>>>>>>>    Procedure CatalogTests
-49929>>>>>>>>>        Handle hTestNeighborhood hParentTestFixture
-49929>>>>>>>>>        Handle[] hTests
-49930>>>>>>>>>        Get phParentTestFixture to hParentTestFixture
-49931>>>>>>>>>        Broadcast Recursive Send ReportTest to hParentTestFixture Self
-49933>>>>>>>>>        Get phTests to hTests
-49934>>>>>>>>>        Send AttachArray hTests
-49935>>>>>>>>>    End_Procedure
-49936>>>>>>>>>    
-49936>>>>>>>>>    Procedure AddTestToCatalog Handle hTest
-49938>>>>>>>>>        Handle[] hTests
-49939>>>>>>>>>        Get phTests to hTests
-49940>>>>>>>>>        Move hTest to hTests[SizeOfArray(hTests)]
-49941>>>>>>>>>        Set phTests to hTests
-49942>>>>>>>>>    End_Procedure
-49943>>>>>>>>>    
-49943>>>>>>>>>    Function CurrentTest Returns Handle
-49945>>>>>>>>>        Integer iCurrent
-49945>>>>>>>>>        Handle[] hTests
-49946>>>>>>>>>        Get phTests to hTests
-49947>>>>>>>>>        Get piCurrent to iCurrent
-49948>>>>>>>>>        Function_Return (hTests[iCurrent])
-49949>>>>>>>>>    End_Function
-49950>>>>>>>>>End_Class
-49951>>>>>>>Use cObjectNameMixin.pkg
-Including file: cObjectNameMixin.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\cObjectNameMixin.pkg)
-49951>>>>>>>>>Class cObjectNameMixin is a Mixin
-49952>>>>>>>>>    Procedure Define_cObjectNameMixin
-49954>>>>>>>>>    End_Procedure
-49955>>>>>>>>>    
-49955>>>>>>>>>    Function LastPartAfterFullStop String sFullString Returns String
-49957>>>>>>>>>        String sTmp
-49957>>>>>>>>>        Integer iPos
-49957>>>>>>>>>        Move sFullString to sTmp
-49958>>>>>>>>>        Move (Pos(".", sTmp)) to iPos
-49959>>>>>>>>>        While (iPos > 0)
-49963>>>>>>>>>            Move (Mid(sTmp, Length(sTmp) - iPos, iPos + 1)) to sTmp
-49964>>>>>>>>>            Move (Pos(".", sTmp)) to iPos
-49965>>>>>>>>>        Loop
-49966>>>>>>>>>>
-49966>>>>>>>>>        Function_Return sTmp
-49967>>>>>>>>>    End_Function
-49968>>>>>>>>>    
-49968>>>>>>>>>    Function LastPartOfObjectName Handle hObject Returns String
-49970>>>>>>>>>        String sFullName sLastPart
-49970>>>>>>>>>        Get Name of hObject to sFullName
-49971>>>>>>>>>        Get LastPartAfterFullStop sFullName to sLastPart
-49972>>>>>>>>>        Function_Return sLastPart
-49973>>>>>>>>>    End_Function
-49974>>>>>>>>>    
-49974>>>>>>>>>End_Class
-49975>>>>>>>Use cAssertMixin.pkg
-Including file: cAssertMixin.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\cAssertMixin.pkg)
-49975>>>>>>>>>Class cAssertMixin is a Mixin
-49976>>>>>>>>>    Procedure Define_cObjectNameMixin
-49978>>>>>>>>>    End_Procedure
-49979>>>>>>>>>    
-49979>>>>>>>>>    Procedure Assert Boolean bCondition String sAssertMessage
-49981>>>>>>>>>        If bCondition Procedure_Return
-49984>>>>>>>>>        
-49984>>>>>>>>>        String sObjectName sErrorMessage
-49984>>>>>>>>>        Get ObjectName to sObjectName
-49985>>>>>>>>>        Move (sObjectName + ": Assert failed.") to sErrorMessage
-49986>>>>>>>>>        If (num_arguments >= 2) Begin
-49988>>>>>>>>>            Move (sErrorMessage * sAssertMessage) to sErrorMessage
-49989>>>>>>>>>        End
-49989>>>>>>>>>>
-49989>>>>>>>>>        Error DfErr_Program sErrorMessage
-49990>>>>>>>>>>
-49990>>>>>>>>>    End_Procedure
-49991>>>>>>>>>    
-49991>>>>>>>>>    Procedure AssertIAreEqual Integer iExpected Integer iActual String sAssertMessage
-49993>>>>>>>>>        If (iExpected = iActual) Procedure_Return
-49996>>>>>>>>>        
-49996>>>>>>>>>        String sObjectName sErrorMessage
-49996>>>>>>>>>        Get ObjectName to sObjectName
-49997>>>>>>>>>        Move (sObjectName + ": Expected:<" + String(iExpected) + ">") to sErrorMessage
-49998>>>>>>>>>        Move (sErrorMessage + "but was:<" + String(iActual) + ">") to sErrorMessage
-49999>>>>>>>>>        If (num_arguments >= 3) Begin
-50001>>>>>>>>>            Move (sErrorMessage + "." * sAssertMessage) to sErrorMessage
-50002>>>>>>>>>        End
-50002>>>>>>>>>>
-50002>>>>>>>>>        Error DfErr_Program sErrorMessage
-50003>>>>>>>>>>
-50003>>>>>>>>>    End_Procedure
-50004>>>>>>>>>    
-50004>>>>>>>>>    Procedure AssertSAreEqual String sExpected String sActual String sAssertMessage
-50006>>>>>>>>>        If (sExpected = sActual) Procedure_Return
-50009>>>>>>>>>        
-50009>>>>>>>>>        String sObjectName sErrorMessage
-50009>>>>>>>>>        Get ObjectName to sObjectName
-50010>>>>>>>>>        Move (sObjectName + ": Expected:<" + sExpected + ">") to sErrorMessage
-50011>>>>>>>>>        Move (sErrorMessage + "but was:<" + sActual + ">") to sErrorMessage
-50012>>>>>>>>>        If (num_arguments >= 3) Begin
-50014>>>>>>>>>            Move (sErrorMessage + "." * sAssertMessage) to sErrorMessage
-50015>>>>>>>>>        End
-50015>>>>>>>>>>
-50015>>>>>>>>>        Error DfErr_Program sErrorMessage
-50016>>>>>>>>>>
-50016>>>>>>>>>    End_Procedure
-50017>>>>>>>>>End_Class
-50018>>>>>>>
-50018>>>>>>>Class cTestFixture is a cObject
-50019>>>>>>>    Import_Class_Protocol cObjectNameMixin
-50020>>>>>>>    Import_Class_Protocol cAssertMixin
-50021>>>>>>>    
-50021>>>>>>>    Procedure Construct_Object
-50023>>>>>>>        Forward Send Construct_Object
-50025>>>>>>>        Property String psTestFixtureName
-50026>>>>>>>        Property Handle phTestCatalog
-50027>>>>>>>        
-50027>>>>>>>        Object oTestCatalog is a cTestCatalog
-50029>>>>>>>        End_Object
-50030>>>>>>>        Set phTestCatalog to (oTestCatalog(Self))
-50031>>>>>>>    End_Procedure
-50032>>>>>>>    
-50032>>>>>>>    Procedure ReportTests
-50034>>>>>>>        Handle hTestCatalog
-50034>>>>>>>        Get phTestCatalog to hTestCatalog
-50035>>>>>>>        If (hTestCatalog = 0) Error DFERR_PROGRAM ("phTestCatalog undefined for" * Name(Self))
-50038>>>>>>>        Else Send InitTestCatalog to hTestCatalog
-50040>>>>>>>    End_Procedure
-50041>>>>>>>    
-50041>>>>>>>    Procedure ReportTestFixture Handle hTestFixtureCatalog
-50043>>>>>>>        Send AddTestFixtureToCatalog to hTestFixtureCatalog Self
-50044>>>>>>>        Send ReportTests
-50045>>>>>>>    End_Function
-50046>>>>>>>    
-50046>>>>>>>    Function ObjectName Returns String
-50048>>>>>>>        String sTestFixtureName
-50048>>>>>>>        Get psTestFixtureName to sTestFixtureName
-50049>>>>>>>        If (sTestFixtureName <> "") Function_Return sTestFixtureName
-50052>>>>>>>        
-50052>>>>>>>        Get LastPartOfObjectName Self to sTestFixtureName
-50053>>>>>>>        Function_Return sTestFixtureName
-50054>>>>>>>    End_Function
-50055>>>>>>>    
-50055>>>>>>>    Procedure RunTestFixture
-50057>>>>>>>        Send Setup
-50058>>>>>>>        Send RunTests
-50059>>>>>>>        Send TearDown
-50060>>>>>>>    End_Procedure
-50061>>>>>>>    
-50061>>>>>>>    Procedure Setup
-50063>>>>>>>    End_Procedure
-50064>>>>>>>    
-50064>>>>>>>    Procedure RunTests
-50066>>>>>>>        Handle hTestCatalog hTest
-50066>>>>>>>        Get phTestCatalog to hTestCatalog
-50067>>>>>>>        Send IteratorReset to hTestCatalog
-50068>>>>>>>        While (IteratorMoveNext(hTestCatalog))
-50072>>>>>>>            Get CurrentTest of hTestCatalog to hTest
-50073>>>>>>>            Send RunTest to hTest
-50074>>>>>>>        Loop
-50075>>>>>>>>
-50075>>>>>>>    End_Procedure
-50076>>>>>>>    
-50076>>>>>>>    Procedure TearDown
-50078>>>>>>>    End_Procedure
-50079>>>>>>>    
-50079>>>>>>>End_Class
-50080>>>>>Use cTest.pkg
-Including file: cTest.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\cTest.pkg)
-50080>>>>>>>Use cTestCatalog.pkg
-50080>>>>>>>Use cObjectNameMixin.pkg
-50080>>>>>>>Use cAssertMixin.pkg
-50080>>>>>>>
-50080>>>>>>>Class cTest is a cObject
-50081>>>>>>>    Import_Class_Protocol cObjectNameMixin
-50082>>>>>>>    Import_Class_Protocol cAssertMixin
-50083>>>>>>>    
-50083>>>>>>>    Procedure Construct_Object
-50085>>>>>>>        Forward Send Construct_Object
-50087>>>>>>>        Property String psTestName
-50088>>>>>>>    End_Procedure
-50089>>>>>>>    
-50089>>>>>>>    Procedure ReportTest Handle hTestFixtureCatalog
-50091>>>>>>>        Send AddTestToCatalog to hTestFixtureCatalog Self
-50092>>>>>>>    End_Procedure
-50093>>>>>>>    
-50093>>>>>>>    Function ObjectName Returns String
-50095>>>>>>>        String sTestName
-50095>>>>>>>        Get psTestName to sTestName
-50096>>>>>>>        If (sTestName <> "") Function_Return sTestName
-50099>>>>>>>        
-50099>>>>>>>        Get LastPartOfObjectName Self to sTestName
-50100>>>>>>>        Function_Return sTestName
-50101>>>>>>>    End_Function
-50102>>>>>>>    
-50102>>>>>>>    Procedure RunTest
-50104>>>>>>>        Send Setup
-50105>>>>>>>        Send Test
-50106>>>>>>>        Send TearDown
-50107>>>>>>>    End_Procedure
-50108>>>>>>>    
-50108>>>>>>>    Procedure Test
-50110>>>>>>>    End_Procedure
-50111>>>>>>>    
-50111>>>>>>>    Procedure Setup
-50113>>>>>>>    End_Procedure
-50114>>>>>>>    
-50114>>>>>>>    Procedure TearDown
-50116>>>>>>>    End_Procedure
-50117>>>>>>>End_Class
-50118>>>>>Use cTestFixtureCatalog.pkg
-50118>>>>>Use cTestFixtureRunner.pkg
-Including file: cTestFixtureRunner.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\cTestFixtureRunner.pkg)
-50118>>>>>>>Use cTestFixtureCatalog.pkg
-50118>>>>>>>Use cTestFixture.pkg
-50118>>>>>>>Use cTest.pkg
-50118>>>>>>>
-50118>>>>>>>Class cTestFixtureRunner is a cObject
-50119>>>>>>>    Procedure Construct_Object
-50121>>>>>>>        Forward Send Construct_Object
-50123>>>>>>>        Property Handle phTestFixtureCatalog
-50124>>>>>>>    End_Procedure
-50125>>>>>>>    
-50125>>>>>>>    Procedure RunTestFixtures
-50127>>>>>>>        Handle hTestFixtureCatalog hTestFixture
-50127>>>>>>>        Get phTestFixtureCatalog to hTestFixtureCatalog
-50128>>>>>>>        If (not(hTestFixtureCatalog)) Begin
-50130>>>>>>>            Error DFERR_PROGRAM "phTestFixtureCatalog not defined for cTestRunner object"
-50131>>>>>>>>
-50131>>>>>>>            Procedure_Return
-50132>>>>>>>        End
-50132>>>>>>>>
-50132>>>>>>>        
-50132>>>>>>>        Send IteratorReset to hTestFixtureCatalog
-50133>>>>>>>        While (IteratorMoveNext(hTestFixtureCatalog))
-50137>>>>>>>            Get CurrentTestFixture of hTestFixtureCatalog to hTestFixture
-50138>>>>>>>            Send RunTestFixture to hTestFixture
-50139>>>>>>>        Loop
-50140>>>>>>>>
-50140>>>>>>>    End_Procedure
-50141>>>>>>>End_Class
-50142>>>
-50142>>>Activate_View Activate_VDFUnitTestRunner_vw for VDFUnitTestRunner_vw
-50152>>>>
-50152>>>Object VDFUnitTestRunner_vw is a View
-50154>>>
-50154>>>    Procedure ShowText String sText
-50157>>>        Send AppendTextLn to oOutputBox sText
-50158>>>    End_Procedure
-50159>>>    
-50159>>>    Set Border_Style to Border_None
-50160>>>    Set Size to 246 427
-50161>>>    Set Location to 0 0
-50162>>>    Set Label to "VDFUnit TestRunner"
-50163>>>    Set Maximize_Icon to False
-50164>>>    Set Minimize_Icon to False
-50165>>>    Set pbSizeToClientArea to False
-50166>>>    Set Sysmenu_Icon to False
-50167>>>    Set Caption_Bar to False
-50168>>>    Set View_Mode to Viewmode_Zoom
-50169>>>    
-50169>>>    Object oOutputBox is a cRichEdit
-50171>>>        Set Size to 110 400
-50172>>>        Set Location to 64 13
-50173>>>        Set Focus_Mode to NonFocusable
-50174>>>        
-50174>>>        Procedure SetRunningColor
-50177>>>            Set Color to clGray
-50178>>>        End_Procedure
-50179>>>        
-50179>>>        Procedure SetSuccessColor
-50182>>>            Set Color to clLime
-50183>>>        End_Procedure
-50184>>>        
-50184>>>        Procedure SetFailedColor
-50187>>>            Set Color to clRed
-50188>>>        End_Procedure
-50189>>>    End_Object
-50190>>>
-50190>>>    Object oRunTestsButton is a Button
-50192>>>        Set Size to 30 200
-50193>>>        Set Location to 13 13
-50194>>>        Set Label to "Run tests!"
-50195>>>        Set Typeface to "verdana"
-50196>>>        Set FontSize to 20 10
-50197>>>    
-50197>>>        Procedure OnClick
-50200>>>            Send Execute to oTestFixtureRunner
-50201>>>        End_Procedure
-50202>>>    
-50202>>>    End_Object
-50203>>>
-50203>>>End_Object
-50204>>>
-50204>>>Use oVDFUnitTests.pkg
-Including file: oVDFUnitTests.pkg    (C:\utvikling\ganymede\BRAVOPro VDF15\Libraries\VDFUnit\AppSrc\oVDFUnitTests.pkg)
-50204>>>>>Use cTestFixture.pkg
-50204>>>>>Use cTest.pkg
-50204>>>>>
-50204>>>>>Object cObjectNameMixinTest is a cTestFixture
-50206>>>>>    Object LastPartAfterFullStop_Tests is a cTest
-50208>>>>>        Procedure Test
-50211>>>>>            Send AssertSAreEqual "Lastname" (LastPartAfterFullStop(Self, "Firstname.Lastname"))
-50212>>>>>            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, "."))
-50213>>>>>            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, ".."))
-50214>>>>>            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, ""))
-50215>>>>>        End_Procedure
-50216>>>>>    End_Object
-50217>>>>>    
-50217>>>>>    Object LastPartOfObjectName_Tests is a cTest
-50219>>>>>        Procedure Test
-50222>>>>>            Send AssertSAreEqual (Uppercase("LastPartOfObjectName_Tests")) (LastPartOfObjectName(Self, Self))
-50223>>>>>        End_Procedure
-50224>>>>>    End_Object
-50225>>>>>End_Object
-50226>>>
-50226>>>Object oTestFixtureCatalog is a cTestFixtureCatalog
-50228>>>    Set phTestFixtureNeighborhood to (Parent(Self))
-50229>>>    Send InitTestFixtureCatalog
-50230>>>    
-50230>>>    Procedure ListTestFixtures
-50233>>>        String sTestFixtureName
-50233>>>        Handle hTestFixture
-50233>>>        
-50233>>>        Send IteratorReset
-50234>>>        While (IteratorMoveNext(Self))
-50238>>>            Get CurrentTestFixture to hTestFixture
-50239>>>            Get ObjectName of hTestFixture to sTestFixtureName
-50240>>>            Send ShowText to VDFUnitTestRunner_vw sTestFixtureName
-50241>>>        Loop
-50242>>>>
-50242>>>    End_Procedure
-50243>>>End_Object
-50244>>>
-50244>>>Object oTestFixtureRunner is a cTestFixtureRunner
-50246>>>    Procedure Execute
-50249>>>        Indicate Err False
-50250>>>        Handle hOutputBox
-50250>>>        Move (oOutputBox(VDFUnitTestRunner_vw(Self))) to hOutputBox
-50251>>>        Send SetRunningColor to hOutputBox
-50252>>>        Send RunTestFixtures to oTestFixtureRunner
-50253>>>        If (Err) Begin
-50255>>>            Send SetFailedColor to hOutputBox
-50256>>>        End
-50256>>>>
-50256>>>        Else Begin
-50257>>>            Send SetSuccessColor to hOutputBox
-50258>>>        End
-50258>>>>
-50258>>>    End_Procedure
-50259>>>    
-50259>>>    Set phTestFixtureCatalog to (oTestFixtureCatalog(Self))
-50260>>>End_Object
-50261>>>
-50261>>>Procedure ListTestFixtures
-50264>>>    Send ListTestFixtures to oTestFixtureCatalog
-50265>>>End_Procedure
-50266>>>
-50266>>>Procedure Execute
-50269>>>    Send Execute to oTestFixtureRunner
-50270>>>End_Procedure
-50271>    End_Object
-50272>    
-50272>    Procedure End_Construct_Object
-50275>        Forward Send End_Construct_Object
-50277>        Handle hoClient
-50277>        Get Client_Id to hoClient
-50278>        Send Activate_VDFUnitTestRunner_vw of hoClient
-50279>        Send ListTestFixtures to (VDFUnitTestRunner_vw(hoClient))
-50280>        If (pbAutoRunTests(Self)) Send Execute to (VDFUnitTestRunner_vw(hoClient))
-50283>    End_Procedure
-50284>
-50284>End_Object
-50285>
-50285>Start_UI
-50286>
+Including file: dfallent.pkd    (C:\Program Files (x86)\Visual DataFlex 16.0\Pkg\dfallent.pkd)
+68663>
+68663>Object oApplication is a cApplication
+68665>//    Set psAutoOpenWorkspace to "Config.ws"
+68665>End_Object
+68666>
+68666>Object oMain is a Panel
+68668>    
+68668>    Property Boolean pbAutoRunTests Public True
+68670>    
+68670>    Set Label to "VDFUnit TestRunner"
+68671>    Set Size to 213 433
+68672>    
+68672>    Object oClientArea is a ClientArea
+68674>        Use VDFUnitTestRunner.vw
+Including file: VDFUnitTestRunner.vw    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\VDFUnitTestRunner.vw)
+68674>>>Use Windows.pkg
+68674>>>Use DFClient.pkg
+68674>>>Use cRichEdit.pkg
+Including file: cRichEdit.pkg    (C:\Program Files (x86)\Visual DataFlex 16.0\Pkg\cRichEdit.pkg)
+68674>>>>>use Windows.pkg
+68674>>>>>Use cEdit_Mixin.pkg
+68674>>>>>
+68674>>>>>// DFO: cRichEdit.Dfo
+68674>>>>>// DFC: cRichEdit.Dfc
+68674>>>>>
+68674>>>>>// constants used for RichEdit Properties
+68674>>>>>// peAlignment 
+68674>>>>>Enum_List 
+68674>>>>>    Define alLeft   for 1 
+68674>>>>>    Define alRight  for 2 
+68674>>>>>    Define alCenter for 3 
+68674>>>>>End_Enum_List 
+68674>>>>>
+68674>>>>>// peBullets 
+68674>>>>>Enum_List 
+68674>>>>>    Define buNone 
+68674>>>>>    Define buBullets 
+68674>>>>>    Define buArabicNumbers 
+68674>>>>>    Define buLowerLetters 
+68674>>>>>    Define buUpperLetters 
+68674>>>>>    Define buLowerRomans 
+68674>>>>>    Define buUpperRomans 
+68674>>>>>End_Enum_List 
+68674>>>>>
+68674>>>>>// peBulletStyle 
+68674>>>>>Enum_List 
+68674>>>>>    Define busRightParen   for 0 
+68674>>>>>    Define busEncloseParen for 256 
+68674>>>>>    Define busPeriod       for 512 
+68674>>>>>    Define busNumberOnly   for 768 
+68674>>>>>    Define busNoDisplay    for 1024 
+68674>>>>>End_Enum_List
+68674>>>>>    
+68674>>>>>// peLineSpacingType
+68674>>>>>Enum_List 
+68674>>>>>    Define lstSingle
+68674>>>>>    Define lstSingleAndOneHalf
+68674>>>>>    Define lstDouble
+68674>>>>>End_Enum_List
+68674>>>>>
+68674>>>>>Class cRichEdit Is A DFBaseRichEdit
+68675>>>>>
+68675>>>>>    Procedure Construct_Object
+68677>>>>>        Forward Send Construct_Object
+68679>>>>>        Send Define_cEdit_Mixin
+68680>>>>>
+68680>>>>>        On_key Key_Ctrl+Key_B send ToggleBold
+68681>>>>>        On_key Key_Ctrl+Key_I send ToggleItalics
+68682>>>>>        On_key Key_Ctrl+Key_U send ToggleUnderline
+68683>>>>>
+68683>>>>>    End_Procedure // Construct_Object
+68684>>>>>
+68684>>>>>    Import_Class_Protocol cEdit_Mixin
+68685>>>>>    
+68685>>>>>    Procedure ToggleBold
+68687>>>>>        Set pbBold to (not(pbBold(self))) 
+68688>>>>>    end_procedure
+68689>>>>>    
+68689>>>>>    Procedure ToggleItalics
+68691>>>>>        Set pbItalics to (not(pbItalics(self))) 
+68692>>>>>    end_procedure
+68693>>>>>    
+68693>>>>>    Procedure ToggleUnderline
+68695>>>>>       Set pbUnderLine to (not(pbUnderLine(self))) 
+68696>>>>>    end_procedure
+68697>>>>>
+68697>>>>>End_Class
+68698>>>>>
+68698>>>Use cProgressBar.pkg
+Including file: cProgressBar.pkg    (C:\Program Files (x86)\Visual DataFlex 16.0\Pkg\cProgressBar.pkg)
+68698>>>>>Use Windows.pkg
+68698>>>>>Use cWinControl.pkg
+68698>>>>>Use CommCtrl.pkg
+68698>>>>>
+68698>>>>>Type tPbRange
+68698>>>>>    Field tPbRange.iLow  as DWord
+68698>>>>>    Field tPbRange.iHigh as DWord
+68698>>>>>End_Type
+68698>>>>>
+68698>>>>>//{ OverrideProperty=pbEnabled DesignTime=False }
+68698>>>>>Class cProgressBar is a cWinControl
+68699>>>>>
+68699>>>>>    Procedure Construct_Object
+68701>>>>>        Forward Send Construct_Object
+68703>>>>>        Property Integer private_piMinimum
+68704>>>>>        Property Integer private_piMaximum   100
+68705>>>>>        Property Integer private_piAdvanceBy 10
+68706>>>>>        Property Integer private_piPosition
+68707>>>>>        Property Integer private_pbVertical  False
+68708>>>>>        Property Integer private_pbSmooth    False
+68709>>>>>        Property Integer private_piBackColor clDefault
+68710>>>>>        Property Integer private_piBarColor  clDefault
+68711>>>>>
+68711>>>>>        Send Define_ToolTip_Support_Mixin
+68712>>>>>
+68712>>>>>        Set External_Class_Name 'cVdfProgressBar' To 'msctls_progress32'
+68713>>>>>        Set Focus_Mode to NonFocusable
+68714>>>>>        Set Skip_State to True
+68715>>>>>        Set pbUseFormWindowHandle to False     // Must come after Define_ToolTip_Support_Mixin
+68716>>>>>    End_Procedure
+68717>>>>>
+68717>>>>>    Import_Class_Protocol ToolTip_Support_Mixin
+68718>>>>>
+68718>>>>>    Procedure Set piMinimum Integer iMin
+68720>>>>>        Integer iMax
+68720>>>>>
+68720>>>>>        Set private_piMinimum to iMin
+68721>>>>>        Get private_piMaximum To iMax
+68722>>>>>        Send Windows_Message PBM_SETRANGE32 iMin iMax
+68723>>>>>    End_Procedure
+68724>>>>>    Function piMinimum Returns Integer
+68726>>>>>        If (Window_Handle(self)) Function_Return (WindowsMessage(PBM_GETRANGE, 1, 0))
+68729>>>>>        Else Function_Return (private_piMinimum(self))
+68731>>>>>    End_Function
+68732>>>>>
+68732>>>>>    Procedure Set piMaximum Integer iMax
+68734>>>>>        Integer iMin
+68734>>>>>
+68734>>>>>        Set private_piMaximum to iMax
+68735>>>>>        Get private_piMinimum To iMin
+68736>>>>>        Send Windows_Message PBM_SETRANGE32 iMin iMax
+68737>>>>>    End_Procedure
+68738>>>>>    Function piMaximum Returns Integer
+68740>>>>>        If (Window_Handle(self)) Function_Return (WindowsMessage(PBM_GETRANGE, 0, 0))
+68743>>>>>        Else Function_Return (private_piMaximum(self))
+68745>>>>>    End_Function
+68746>>>>>
+68746>>>>>    Procedure Set piAdvanceBy Integer iAdvanceBy
+68748>>>>>        Set private_piAdvanceBy To iAdvanceBy
+68749>>>>>        Send Windows_Message PBM_SETSTEP iAdvanceBy 0
+68750>>>>>    End_Procedure
+68751>>>>>    Function piAdvanceBy Returns Integer
+68753>>>>>        Function_Return (private_piAdvanceBy(self))
+68754>>>>>    End_Function
+68755>>>>>
+68755>>>>>    Procedure Set piPosition Integer iPos
+68757>>>>>        Set private_piPosition To iPos
+68758>>>>>        Send Windows_Message PBM_SETPOS iPos 0
+68759>>>>>    End_Procedure
+68760>>>>>
+68760>>>>>    Function piPosition Returns Integer
+68762>>>>>        If (Window_Handle(self)) Function_Return (WindowsMessage(PBM_GETPOS, 0, 0))
+68765>>>>>        Else Function_Return (private_piPosition(self))
+68767>>>>>    End_Function
+68768>>>>>
+68768>>>>>    Procedure Set pbVertical Boolean bVertical
+68770>>>>>        If (private_pbVertical(self) <> bVertical) Begin
+68772>>>>>            Set private_pbVertical To bVertical
+68773>>>>>           Send DoRecreateWindow
+68774>>>>>        End
+68774>>>>>>
+68774>>>>>    End_Procedure
+68775>>>>>
+68775>>>>>    Function pbVertical Returns Boolean
+68777>>>>>        Function_Return (private_pbVertical(self))
+68778>>>>>    End_Function
+68779>>>>>
+68779>>>>>    Procedure Set pbSmooth Boolean bSmooth
+68781>>>>>        If (private_pbSmooth(self) <> bSmooth) Begin
+68783>>>>>           Set private_pbSmooth To bSmooth
+68784>>>>>           Send DoRecreateWindow
+68785>>>>>        End
+68785>>>>>>
+68785>>>>>    End_Procedure
+68786>>>>>    Function pbSmooth Returns Boolean
+68788>>>>>        Function_Return (private_pbSmooth(self))
+68789>>>>>    End_Function
+68790>>>>>
+68790>>>>>    Procedure Set piBackColor Integer rgbColor
+68792>>>>>        Set private_piBackColor To rgbColor
+68793>>>>>        Send Windows_Message PBM_SETBKCOLOR 0 rgbColor
+68794>>>>>    End_Procedure
+68795>>>>>    Function piBackColor Returns Integer
+68797>>>>>        Function_Return (private_piBackColor(self))
+68798>>>>>    End_Function
+68799>>>>>
+68799>>>>>    Procedure Set piBarColor Integer rgbColor
+68801>>>>>        Set private_piBarColor To rgbColor
+68802>>>>>        Send Windows_Message PBM_SETBARCOLOR 0 rgbColor
+68803>>>>>    End_Procedure
+68804>>>>>    Function piBarColor Returns Integer
+68806>>>>>        Function_Return (private_piBarColor(self))
+68807>>>>>    End_Function
+68808>>>>>
+68808>>>>>    Procedure DoAdvance
+68810>>>>>        Send Windows_Message PBM_STEPIT 0 0
+68811>>>>>    End_procedure
+68812>>>>>
+68812>>>>>    Procedure DoAdvanceBy  Integer iAdvanceBy
+68814>>>>>        Send Windows_Message PBM_DELTAPOS iAdvanceBy 0
+68815>>>>>    End_procedure
+68816>>>>>
+68816>>>>>    Procedure private_DoInitWindow
+68818>>>>>        Set piBarColor  To (private_piBarColor(self))
+68819>>>>>        Set piBackColor To (private_piBackColor(self))
+68820>>>>>        Set piAdvanceBy To (private_piAdvanceBy(self))
+68821>>>>>        Set piMinimum   To (private_piMinimum(self))
+68822>>>>>        Set piMaximum   To (private_piMaximum(self))
+68823>>>>>        Set piPosition  To (private_piPosition(self))
+68824>>>>>    End_Procedure
+68825>>>>>
+68825>>>>>    Procedure Page_Object Integer iState
+68827>>>>>        Handle hWnd
+68827>>>>>
+68827>>>>>        Get Window_Handle To hWnd
+68828>>>>>        If (hWnd=0 and iState) Begin
+68830>>>>>            Set Window_Style To PBS_VERTICAL (private_pbVertical(self))
+68831>>>>>            Set Window_Style To PBS_SMOOTH   (private_pbSmooth(self))
+68832>>>>>            Forward Send Page_Object True
+68834>>>>>        End
+68834>>>>>>
+68834>>>>>        Else Forward Send Page_Object iState
+68837>>>>>     
+68837>>>>>        // Handle tooltip support....
+68837>>>>>        If (iState = 0) Begin
+68839>>>>>            Send RequestDeleteToolTip
+68840>>>>>        End 
+68840>>>>>>
+68840>>>>>        Else Begin
+68841>>>>>            Send RequestAddToolTip
+68842>>>>>        End
+68842>>>>>>
+68842>>>>>    End_Procedure
+68843>>>>>
+68843>>>>>    Procedure Page Integer iState
+68845>>>>>        Forward Send Page iState
+68847>>>>>        If (iState =1) Send private_DoInitWindow
+68850>>>>>    End_Procedure
+68851>>>>>
+68851>>>>>    // Called by Page_Object. Handles tooltip creation. We use a dedicated
+68851>>>>>    // method to perform AddToolTip because it is often the case that Page_Object
+68851>>>>>    // is implemented in a mixin class.
+68851>>>>>    Procedure RequestAddToolTip
+68853>>>>>        Send AddToolTip
+68854>>>>>    End_Procedure  // RequestAddToolTip
+68855>>>>>
+68855>>>>>
+68855>>>>>    // Called by Page_Object. Handles tooltip removal. 
+68855>>>>>    Procedure RequestDeleteToolTip
+68857>>>>>        Send DeleteToolTip
+68858>>>>>    End_Procedure // RequestDeleteToolTip
+68859>>>>>End_Class
+68860>>>Use VDFUnit.pkg
+Including file: VDFUnit.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\VDFUnit.pkg)
+68860>>>>>Use cTestFixture.pkg
+Including file: cTestFixture.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\cTestFixture.pkg)
+68860>>>>>>>Use cTestFixtureCatalog.pkg
+Including file: cTestFixtureCatalog.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\cTestFixtureCatalog.pkg)
+68860>>>>>>>>>Use cArrayIteratorInteger.pkg
+Including file: cArrayIteratorInteger.pkg    (C:\work\VDFUnit\Libraries\VDFPatterns\AppSrc\cArrayIteratorInteger.pkg)
+68860>>>>>>>>>>>Use cArrayIterator.pkg
+Including file: cArrayIterator.pkg    (C:\work\VDFUnit\Libraries\VDFPatterns\AppSrc\cArrayIterator.pkg)
+68860>>>>>>>>>>>>>Use cIterator_Mixin.pkg
+Including file: cIterator_Mixin.pkg    (C:\work\VDFUnit\Libraries\VDFPatterns\AppSrc\cIterator_Mixin.pkg)
+68860>>>>>>>>>>>>>>>//Iterator pattern interface. Classes importing this class protocol need to 
+68860>>>>>>>>>>>>>>>//implement the IteratorMoveNext function.
+68860>>>>>>>>>>>>>>>//
+68860>>>>>>>>>>>>>>>//
+68860>>>>>>>>>>>>>>>//@author Ola Eld›y
+68860>>>>>>>>>>>>>>>Use VdfBase.pkg
+68860>>>>>>>>>>>>>>>
+68860>>>>>>>>>>>>>>>Class cIterator_Mixin is a Mixin
+68861>>>>>>>>>>>>>>>
+68861>>>>>>>>>>>>>>>    //Doc/ Interface=Private
+68861>>>>>>>>>>>>>>>    Procedure Define_cIterator_Mixin
+68863>>>>>>>>>>>>>>>        //Points to the current element in the collection. This can be used as
+68863>>>>>>>>>>>>>>>        //an object handle, an item number, a Recnum or whatever (as long as
+68863>>>>>>>>>>>>>>>        //it's an integer (a handle is also an integer).
+68863>>>>>>>>>>>>>>>        Property Integer piCurrent
+68864>>>>>>>>>>>>>>>    End_Procedure // Construct_Object
+68865>>>>>>>>>>>>>>>    
+68865>>>>>>>>>>>>>>>    Procedure IteratorReset_Mixin
+68867>>>>>>>>>>>>>>>        set piCurrent to -1
+68868>>>>>>>>>>>>>>>    End_Procedure
+68869>>>>>>>>>>>>>>>    
+68869>>>>>>>>>>>>>>>    //Resets to first element in collection
+68869>>>>>>>>>>>>>>>    //Doc/ Interface=Public
+68869>>>>>>>>>>>>>>>    Procedure IteratorReset
+68871>>>>>>>>>>>>>>>        Send IteratorReset_Mixin
+68872>>>>>>>>>>>>>>>    End_Procedure // IteratorReset
+68873>>>>>>>>>>>>>>>    
+68873>>>>>>>>>>>>>>>    //Find next element in collection
+68873>>>>>>>>>>>>>>>    //@return If next element is found: True. If not: False
+68873>>>>>>>>>>>>>>>    //Doc/ Interface=Public
+68873>>>>>>>>>>>>>>>    Function IteratorMoveNext Returns Boolean
+68875>>>>>>>>>>>>>>>        //Implement code to find next element in collection, then set piCurrent
+68875>>>>>>>>>>>>>>>        //to point to this element. Return true if found.
+68875>>>>>>>>>>>>>>>        Function_return False
+68876>>>>>>>>>>>>>>>    End_Function // IteratorReset
+68877>>>>>>>>>>>>>>>    
+68877>>>>>>>>>>>>>>>    Function IteratorCurrent_Mixin Returns Integer
+68879>>>>>>>>>>>>>>>        Function_Return (piCurrent(self))
+68880>>>>>>>>>>>>>>>    End_Function
+68881>>>>>>>>>>>>>>>    
+68881>>>>>>>>>>>>>>>    //Doc/Interface=Public
+68881>>>>>>>>>>>>>>>    //@return Points to current element 
+68881>>>>>>>>>>>>>>>    Function IteratorCurrent Returns Integer
+68883>>>>>>>>>>>>>>>        Function_Return (IteratorCurrent_Mixin(self))
+68884>>>>>>>>>>>>>>>    End_Function // IteratorCurrent
+68885>>>>>>>>>>>>>>>    
+68885>>>>>>>>>>>>>>>End_Class
+68886>>>>>>>>>>>>>>>
+68886>>>>>>>>>>>>>>>//Here is the syntax for using this Mixin class in your own class:
+68886>>>>>>>>>>>>>>>//
+68886>>>>>>>>>>>>>>>//Use cIterator_Mixin.pkg // our mixin class package
+68886>>>>>>>>>>>>>>>//Class cYourClass is a cSomething
+68886>>>>>>>>>>>>>>>//    Procedure Construct_Object
+68886>>>>>>>>>>>>>>>//        Forward Send Construct_Object
+68886>>>>>>>>>>>>>>>//        :
+68886>>>>>>>>>>>>>>>//        send Define_cIterator_Mixin // Constructor method
+68886>>>>>>>>>>>>>>>//    End_Procedure
+68886>>>>>>>>>>>>>>>//    :
+68886>>>>>>>>>>>>>>>//    Import_Class_Protocol cIterator_Mixin
+68886>>>>>>>>>>>>>>>//    :
+68886>>>>>>>>>>>>>>>//End_Class
+68886>>>>>>>>>>>>>
+68886>>>>>>>>>>>>>//This is an iterator object that attaches to an array. Use the procedure
+68886>>>>>>>>>>>>>//AttachArray to attach an array variable. Then the Iterator interface is
+68886>>>>>>>>>>>>>//available for the array by using the cArrayIterator object.
+68886>>>>>>>>>>>>>//The class is abstract, and needs to be instantiated by using the various
+68886>>>>>>>>>>>>>//array type subclasses, e.g. cArrayIteratorString, cArrayIteratorInteger
+68886>>>>>>>>>>>>>//Doc/Classtype=Abstract 
+68886>>>>>>>>>>>>>Class cArrayIterator is a cObject
+68887>>>>>>>>>>>>>    //Doc/Interface=Private
+68887>>>>>>>>>>>>>    Procedure Construct_Object
+68889>>>>>>>>>>>>>        Forward Send Construct_Object
+68891>>>>>>>>>>>>>        send Define_cIterator_Mixin // Constructor method
+68892>>>>>>>>>>>>>        
+68892>>>>>>>>>>>>>        Property Integer piArrayType
+68893>>>>>>>>>>>>>        Property String[] psArray
+68894>>>>>>>>>>>>>    End_Procedure
+68895>>>>>>>>>>>>>    
+68895>>>>>>>>>>>>>    Import_Class_Protocol cIterator_Mixin
+68896>>>>>>>>>>>>>    
+68896>>>>>>>>>>>>>    //Attaches an array variable to the cArrayIterator object.
+68896>>>>>>>>>>>>>    //This procedure has to be instantiated in the various array type subclasses
+68896>>>>>>>>>>>>>    //Doc/Interface=Virtual
+68896>>>>>>>>>>>>>    Procedure AttachArray
+68898>>>>>>>>>>>>>        
+68898>>>>>>>>>>>>>    End_Procedure // AttachArray
+68899>>>>>>>>>>>>>     
+68899>>>>>>>>>>>>>End_Class       // cArrayIterator
+68900>>>>>>>>>>>
+68900>>>>>>>>>>>//Integer array instantiation class of cArrayIterator
+68900>>>>>>>>>>>Class cArrayIteratorInteger is a cArrayIterator
+68901>>>>>>>>>>>    Procedure Construct_Object
+68903>>>>>>>>>>>        Forward Send Construct_Object
+68905>>>>>>>>>>>        Property Integer[] piArray
+68906>>>>>>>>>>>    End_Procedure // Construct_Object
+68907>>>>>>>>>>>    
+68907>>>>>>>>>>>    //Attaches an array variable to the cArrayIterator object. After updating
+68907>>>>>>>>>>>    //the array, this procedure needs to be called before using any part of the
+68907>>>>>>>>>>>    //iterator interface. 
+68907>>>>>>>>>>>    //@param iArray Integer Array variable to attach
+68907>>>>>>>>>>>    Procedure AttachArray Integer[] iArray
+68909>>>>>>>>>>>        set piArray to iArray
+68910>>>>>>>>>>>    End_Procedure // AttachArray
+68911>>>>>>>>>>>    
+68911>>>>>>>>>>>    Function RetrieveArray Returns Integer[]
+68913>>>>>>>>>>>        Integer[] iArray
+68914>>>>>>>>>>>        Get piArray to iArray
+68915>>>>>>>>>>>        Function_Return iArray
+68916>>>>>>>>>>>    End_Function
+68917>>>>>>>>>>>
+68917>>>>>>>>>>>    //Find next element in collection
+68917>>>>>>>>>>>    //@return If next element is found: True. If not: False
+68917>>>>>>>>>>>    //Doc/ Interface=Public
+68917>>>>>>>>>>>    Function IteratorMoveNext Returns Boolean
+68919>>>>>>>>>>>        Integer iCurrent
+68919>>>>>>>>>>>        Integer[] iArray
+68920>>>>>>>>>>>        get piArray to iArray
+68921>>>>>>>>>>>        //Implement code to find next element in collection, then set piCurrent
+68921>>>>>>>>>>>        //to point to this element. Return true if found.
+68921>>>>>>>>>>>        get piCurrent to iCurrent
+68922>>>>>>>>>>>        If (iCurrent >= (SizeOfArray(iArray) - 1)) Function_return False
+68925>>>>>>>>>>>        Else Begin
+68926>>>>>>>>>>>            Set piCurrent to (iCurrent + 1)
+68927>>>>>>>>>>>            Function_Return True
+68928>>>>>>>>>>>        End
+68928>>>>>>>>>>>>
+68928>>>>>>>>>>>    End_Function // IteratorReset
+68929>>>>>>>>>>>    
+68929>>>>>>>>>>>    //Add element to collection
+68929>>>>>>>>>>>    //Doc/ Interface=Public
+68929>>>>>>>>>>>    Procedure AddToArray Integer iValue
+68931>>>>>>>>>>>        Integer[] iArray
+68932>>>>>>>>>>>        Get piArray to iArray
+68933>>>>>>>>>>>        Move iValue to iArray[SizeOfArray(iArray)]
+68934>>>>>>>>>>>        Set piArray to iArray
+68935>>>>>>>>>>>    End_Procedure
+68936>>>>>>>>>>>    
+68936>>>>>>>>>>>    //Returns current array value
+68936>>>>>>>>>>>    //Doc/ Interface=Public
+68936>>>>>>>>>>>    Function CurrentArrayValue Returns Integer
+68938>>>>>>>>>>>        Integer iCurrent
+68938>>>>>>>>>>>        Integer[] iArray
+68939>>>>>>>>>>>        get piArray to iArray
+68940>>>>>>>>>>>        get piCurrent to iCurrent
+68941>>>>>>>>>>>        Function_Return iArray[iCurrent]
+68942>>>>>>>>>>>    End_Function
+68943>>>>>>>>>>>    
+68943>>>>>>>>>>>End_Class   // cArrayIteratorInteger
+68944>>>>>>>>>
+68944>>>>>>>>>Class cTestFixtureCatalog is a cArrayIteratorInteger
+68945>>>>>>>>>    Procedure Construct_Object
+68947>>>>>>>>>        Forward Send Construct_Object
+68949>>>>>>>>>        Property Handle phTestFixtureNeighborhood
+68950>>>>>>>>>        Property Handle[] phTestFixtures
+68951>>>>>>>>>    End_Procedure
+68952>>>>>>>>>    
+68952>>>>>>>>>    Procedure InitTestFixtureCatalog
+68954>>>>>>>>>        Send CatalogTestFixtures
+68955>>>>>>>>>    End_Procedure
+68956>>>>>>>>>    
+68956>>>>>>>>>    Procedure CatalogTestFixtures
+68958>>>>>>>>>        Handle hTestFixtureNeighborhood
+68958>>>>>>>>>        Handle[] hTestFixtures
+68959>>>>>>>>>        
+68959>>>>>>>>>        //Reset array properties
+68959>>>>>>>>>        Set phTestFixtures to hTestFixtures
+68960>>>>>>>>>        
+68960>>>>>>>>>        Get phTestFixtureNeighborhood to hTestFixtureNeighborhood
+68961>>>>>>>>>        Broadcast Recursive Send ReportTestFixture to hTestFixtureNeighborhood Self
+68963>>>>>>>>>        Get phTestFixtures to hTestFixtures
+68964>>>>>>>>>        Send AttachArray hTestFixtures
+68965>>>>>>>>>    End_Procedure
+68966>>>>>>>>>    
+68966>>>>>>>>>    Procedure AddTestFixtureToCatalog Handle hTestFixture
+68968>>>>>>>>>        Handle[] hTestFixtures
+68969>>>>>>>>>        Get phTestFixtures to hTestFixtures
+68970>>>>>>>>>        Move hTestFixture to hTestFixtures[SizeOfArray(hTestFixtures)]
+68971>>>>>>>>>        Set phTestFixtures to hTestFixtures
+68972>>>>>>>>>    End_Procedure
+68973>>>>>>>>>    
+68973>>>>>>>>>    Function CurrentTestFixture Returns Handle
+68975>>>>>>>>>        Integer iCurrent
+68975>>>>>>>>>        Handle[] hTestFixtures
+68976>>>>>>>>>        Get phTestFixtures to hTestFixtures
+68977>>>>>>>>>        Get piCurrent to iCurrent
+68978>>>>>>>>>        Function_Return (hTestFixtures[iCurrent])
+68979>>>>>>>>>    End_Function
+68980>>>>>>>>>End_Class
+68981>>>>>>>Use cTestCatalog.pkg
+Including file: cTestCatalog.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\cTestCatalog.pkg)
+68981>>>>>>>>>Use cArrayIteratorInteger.pkg
+68981>>>>>>>>>
+68981>>>>>>>>>Class cTestCatalog is a cArrayIteratorInteger
+68982>>>>>>>>>    Procedure Construct_Object
+68984>>>>>>>>>        Forward Send Construct_Object
+68986>>>>>>>>>        Property Handle phParentTestFixture
+68987>>>>>>>>>        Property Handle[] phTests
+68988>>>>>>>>>        Set phParentTestFixture to (Parent(Self))
+68989>>>>>>>>>    End_Procedure
+68990>>>>>>>>>    
+68990>>>>>>>>>    Procedure InitTestCatalog
+68992>>>>>>>>>        Send CatalogTests
+68993>>>>>>>>>    End_Procedure
+68994>>>>>>>>>    
+68994>>>>>>>>>    Procedure CatalogTests
+68996>>>>>>>>>        Handle hTestNeighborhood hParentTestFixture
+68996>>>>>>>>>        Handle[] hTests
+68997>>>>>>>>>        Get phParentTestFixture to hParentTestFixture
+68998>>>>>>>>>        Broadcast Recursive Send ReportTest to hParentTestFixture Self
+69000>>>>>>>>>        Get phTests to hTests
+69001>>>>>>>>>        Send AttachArray hTests
+69002>>>>>>>>>    End_Procedure
+69003>>>>>>>>>    
+69003>>>>>>>>>    Procedure AddTestToCatalog Handle hTest
+69005>>>>>>>>>        Handle[] hTests
+69006>>>>>>>>>        Get phTests to hTests
+69007>>>>>>>>>        Move hTest to hTests[SizeOfArray(hTests)]
+69008>>>>>>>>>        Set phTests to hTests
+69009>>>>>>>>>    End_Procedure
+69010>>>>>>>>>    
+69010>>>>>>>>>    Function CurrentTest Returns Handle
+69012>>>>>>>>>        Integer iCurrent
+69012>>>>>>>>>        Handle[] hTests
+69013>>>>>>>>>        Get phTests to hTests
+69014>>>>>>>>>        Get piCurrent to iCurrent
+69015>>>>>>>>>        Function_Return (hTests[iCurrent])
+69016>>>>>>>>>    End_Function
+69017>>>>>>>>>End_Class
+69018>>>>>>>Use cObjectNameMixin.pkg
+Including file: cObjectNameMixin.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\cObjectNameMixin.pkg)
+69018>>>>>>>>>Class cObjectNameMixin is a Mixin
+69019>>>>>>>>>    Procedure Define_cObjectNameMixin
+69021>>>>>>>>>    End_Procedure
+69022>>>>>>>>>    
+69022>>>>>>>>>    Function LastPartAfterFullStop String sFullString Returns String
+69024>>>>>>>>>        String sTmp
+69024>>>>>>>>>        Integer iPos
+69024>>>>>>>>>        Move sFullString to sTmp
+69025>>>>>>>>>        Move (Pos(".", sTmp)) to iPos
+69026>>>>>>>>>        While (iPos > 0)
+69030>>>>>>>>>            Move (Mid(sTmp, Length(sTmp) - iPos, iPos + 1)) to sTmp
+69031>>>>>>>>>            Move (Pos(".", sTmp)) to iPos
+69032>>>>>>>>>        Loop
+69033>>>>>>>>>>
+69033>>>>>>>>>        Function_Return sTmp
+69034>>>>>>>>>    End_Function
+69035>>>>>>>>>    
+69035>>>>>>>>>    Function LastPartOfObjectName Handle hObject Returns String
+69037>>>>>>>>>        String sFullName sLastPart
+69037>>>>>>>>>        Get Name of hObject to sFullName
+69038>>>>>>>>>        Get LastPartAfterFullStop sFullName to sLastPart
+69039>>>>>>>>>        Function_Return sLastPart
+69040>>>>>>>>>    End_Function
+69041>>>>>>>>>    
+69041>>>>>>>>>End_Class
+69042>>>>>>>Use cAssertMixin.pkg
+Including file: cAssertMixin.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\cAssertMixin.pkg)
+69042>>>>>>>>>Class cAssertMixin is a Mixin
+69043>>>>>>>>>    Procedure Define_cObjectNameMixin
+69045>>>>>>>>>    End_Procedure
+69046>>>>>>>>>    
+69046>>>>>>>>>    Procedure Assert Boolean bCondition String sAssertMessage
+69048>>>>>>>>>        If bCondition Procedure_Return
+69051>>>>>>>>>        
+69051>>>>>>>>>        String sObjectName sErrorMessage
+69051>>>>>>>>>        Get ObjectName to sObjectName
+69052>>>>>>>>>        Move (sObjectName + ": Assert failed.") to sErrorMessage
+69053>>>>>>>>>        If (num_arguments >= 2) Begin
+69055>>>>>>>>>            Move (sErrorMessage * sAssertMessage) to sErrorMessage
+69056>>>>>>>>>        End
+69056>>>>>>>>>>
+69056>>>>>>>>>        Error DfErr_Program sErrorMessage
+69057>>>>>>>>>>
+69057>>>>>>>>>    End_Procedure
+69058>>>>>>>>>    
+69058>>>>>>>>>    Procedure AssertIAreEqual Integer iExpected Integer iActual String sAssertMessage
+69060>>>>>>>>>        If (iExpected = iActual) Procedure_Return
+69063>>>>>>>>>        
+69063>>>>>>>>>        String sObjectName sErrorMessage
+69063>>>>>>>>>        Get ObjectName to sObjectName
+69064>>>>>>>>>        Move (sObjectName + ": Expected:<" + String(iExpected) + ">") to sErrorMessage
+69065>>>>>>>>>        Move (sErrorMessage + "but was:<" + String(iActual) + ">") to sErrorMessage
+69066>>>>>>>>>        If (num_arguments >= 3) Begin
+69068>>>>>>>>>            Move (sErrorMessage + "." * sAssertMessage) to sErrorMessage
+69069>>>>>>>>>        End
+69069>>>>>>>>>>
+69069>>>>>>>>>        Error DfErr_Program sErrorMessage
+69070>>>>>>>>>>
+69070>>>>>>>>>    End_Procedure
+69071>>>>>>>>>    
+69071>>>>>>>>>    Procedure AssertSAreEqual String sExpected String sActual String sAssertMessage
+69073>>>>>>>>>        If (sExpected = sActual) Procedure_Return
+69076>>>>>>>>>        
+69076>>>>>>>>>        String sObjectName sErrorMessage
+69076>>>>>>>>>        Get ObjectName to sObjectName
+69077>>>>>>>>>        Move (sObjectName + ": Expected:<" + sExpected + ">") to sErrorMessage
+69078>>>>>>>>>        Move (sErrorMessage + "but was:<" + sActual + ">") to sErrorMessage
+69079>>>>>>>>>        If (num_arguments >= 3) Begin
+69081>>>>>>>>>            Move (sErrorMessage + "." * sAssertMessage) to sErrorMessage
+69082>>>>>>>>>        End
+69082>>>>>>>>>>
+69082>>>>>>>>>        Error DfErr_Program sErrorMessage
+69083>>>>>>>>>>
+69083>>>>>>>>>    End_Procedure
+69084>>>>>>>>>End_Class
+69085>>>>>>>
+69085>>>>>>>Class cTestFixture is a cObject
+69086>>>>>>>    Import_Class_Protocol cObjectNameMixin
+69087>>>>>>>    Import_Class_Protocol cAssertMixin
+69088>>>>>>>    
+69088>>>>>>>    Procedure Construct_Object
+69090>>>>>>>        Forward Send Construct_Object
+69092>>>>>>>        Property String psTestFixtureName
+69093>>>>>>>        Property Handle phTestCatalog
+69094>>>>>>>        
+69094>>>>>>>        Object oTestCatalog is a cTestCatalog
+69096>>>>>>>        End_Object
+69097>>>>>>>        Set phTestCatalog to (oTestCatalog(Self))
+69098>>>>>>>    End_Procedure
+69099>>>>>>>    
+69099>>>>>>>    Procedure ReportTests
+69101>>>>>>>        Handle hTestCatalog
+69101>>>>>>>        Get phTestCatalog to hTestCatalog
+69102>>>>>>>        If (hTestCatalog = 0) Error DFERR_PROGRAM ("phTestCatalog undefined for" * Name(Self))
+69105>>>>>>>        Else Send InitTestCatalog to hTestCatalog
+69107>>>>>>>    End_Procedure
+69108>>>>>>>    
+69108>>>>>>>    Procedure ReportTestFixture Handle hTestFixtureCatalog
+69110>>>>>>>        Send AddTestFixtureToCatalog to hTestFixtureCatalog Self
+69111>>>>>>>        Send ReportTests
+69112>>>>>>>    End_Function
+69113>>>>>>>    
+69113>>>>>>>    Function ObjectName Returns String
+69115>>>>>>>        String sTestFixtureName
+69115>>>>>>>        Get psTestFixtureName to sTestFixtureName
+69116>>>>>>>        If (sTestFixtureName <> "") Function_Return sTestFixtureName
+69119>>>>>>>        
+69119>>>>>>>        Get LastPartOfObjectName Self to sTestFixtureName
+69120>>>>>>>        Function_Return sTestFixtureName
+69121>>>>>>>    End_Function
+69122>>>>>>>    
+69122>>>>>>>    Procedure RunTestFixture
+69124>>>>>>>        Send Setup
+69125>>>>>>>        Send RunTests
+69126>>>>>>>        Send TearDown
+69127>>>>>>>    End_Procedure
+69128>>>>>>>    
+69128>>>>>>>    Procedure Setup
+69130>>>>>>>    End_Procedure
+69131>>>>>>>    
+69131>>>>>>>    Procedure RunTests
+69133>>>>>>>        Handle hTestCatalog hTest
+69133>>>>>>>        Get phTestCatalog to hTestCatalog
+69134>>>>>>>        Send IteratorReset to hTestCatalog
+69135>>>>>>>        While (IteratorMoveNext(hTestCatalog))
+69139>>>>>>>            Get CurrentTest of hTestCatalog to hTest
+69140>>>>>>>            Send RunTest to hTest
+69141>>>>>>>        Loop
+69142>>>>>>>>
+69142>>>>>>>    End_Procedure
+69143>>>>>>>    
+69143>>>>>>>    Procedure TearDown
+69145>>>>>>>    End_Procedure
+69146>>>>>>>    
+69146>>>>>>>End_Class
+69147>>>>>Use cTest.pkg
+Including file: cTest.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\cTest.pkg)
+69147>>>>>>>Use cTestCatalog.pkg
+69147>>>>>>>Use cObjectNameMixin.pkg
+69147>>>>>>>Use cAssertMixin.pkg
+69147>>>>>>>
+69147>>>>>>>Class cTest is a cObject
+69148>>>>>>>    Import_Class_Protocol cObjectNameMixin
+69149>>>>>>>    Import_Class_Protocol cAssertMixin
+69150>>>>>>>    
+69150>>>>>>>    Procedure Construct_Object
+69152>>>>>>>        Forward Send Construct_Object
+69154>>>>>>>        Property String psTestName
+69155>>>>>>>    End_Procedure
+69156>>>>>>>    
+69156>>>>>>>    Procedure ReportTest Handle hTestFixtureCatalog
+69158>>>>>>>        Send AddTestToCatalog to hTestFixtureCatalog Self
+69159>>>>>>>    End_Procedure
+69160>>>>>>>    
+69160>>>>>>>    Function ObjectName Returns String
+69162>>>>>>>        String sTestName
+69162>>>>>>>        Get psTestName to sTestName
+69163>>>>>>>        If (sTestName <> "") Function_Return sTestName
+69166>>>>>>>        
+69166>>>>>>>        Get LastPartOfObjectName Self to sTestName
+69167>>>>>>>        Function_Return sTestName
+69168>>>>>>>    End_Function
+69169>>>>>>>    
+69169>>>>>>>    Procedure RunTest
+69171>>>>>>>        Send Setup
+69172>>>>>>>        Send Test
+69173>>>>>>>        Send TearDown
+69174>>>>>>>    End_Procedure
+69175>>>>>>>    
+69175>>>>>>>    Procedure Test
+69177>>>>>>>    End_Procedure
+69178>>>>>>>    
+69178>>>>>>>    Procedure Setup
+69180>>>>>>>    End_Procedure
+69181>>>>>>>    
+69181>>>>>>>    Procedure TearDown
+69183>>>>>>>    End_Procedure
+69184>>>>>>>End_Class
+69185>>>>>Use cTestFixtureCatalog.pkg
+69185>>>>>Use cTestFixtureRunner.pkg
+Including file: cTestFixtureRunner.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\cTestFixtureRunner.pkg)
+69185>>>>>>>Use cTestFixtureCatalog.pkg
+69185>>>>>>>Use cTestFixture.pkg
+69185>>>>>>>Use cTest.pkg
+69185>>>>>>>
+69185>>>>>>>Class cTestFixtureRunner is a cObject
+69186>>>>>>>    Procedure Construct_Object
+69188>>>>>>>        Forward Send Construct_Object
+69190>>>>>>>        Property Handle phTestFixtureCatalog
+69191>>>>>>>    End_Procedure
+69192>>>>>>>    
+69192>>>>>>>    Procedure RunTestFixtures
+69194>>>>>>>        Handle hTestFixtureCatalog hTestFixture
+69194>>>>>>>        Get phTestFixtureCatalog to hTestFixtureCatalog
+69195>>>>>>>        If (not(hTestFixtureCatalog)) Begin
+69197>>>>>>>            Error DFERR_PROGRAM "phTestFixtureCatalog not defined for cTestRunner object"
+69198>>>>>>>>
+69198>>>>>>>            Procedure_Return
+69199>>>>>>>        End
+69199>>>>>>>>
+69199>>>>>>>        
+69199>>>>>>>        Send IteratorReset to hTestFixtureCatalog
+69200>>>>>>>        While (IteratorMoveNext(hTestFixtureCatalog))
+69204>>>>>>>            Get CurrentTestFixture of hTestFixtureCatalog to hTestFixture
+69205>>>>>>>            Send RunTestFixture to hTestFixture
+69206>>>>>>>        Loop
+69207>>>>>>>>
+69207>>>>>>>    End_Procedure
+69208>>>>>>>End_Class
+69209>>>
+69209>>>Activate_View Activate_VDFUnitTestRunner_vw for VDFUnitTestRunner_vw
+69219>>>>
+69219>>>Object VDFUnitTestRunner_vw is a View
+69221>>>
+69221>>>    Procedure ShowText String sText
+69224>>>        Send AppendTextLn to oOutputBox sText
+69225>>>    End_Procedure
+69226>>>    
+69226>>>    Set Border_Style to Border_None
+69227>>>    Set Size to 246 427
+69228>>>    Set Location to 0 0
+69229>>>    Set Label to "VDFUnit TestRunner"
+69230>>>    Set Maximize_Icon to False
+69231>>>    Set Minimize_Icon to False
+69232>>>    Set pbSizeToClientArea to False
+69233>>>    Set Sysmenu_Icon to False
+69234>>>    Set Caption_Bar to False
+69235>>>    Set View_Mode to Viewmode_Zoom
+69236>>>    
+69236>>>    Object oOutputBox is a cRichEdit
+69238>>>        Set Size to 110 400
+69239>>>        Set Location to 64 13
+69240>>>        Set Focus_Mode to NonFocusable
+69241>>>        
+69241>>>        Procedure SetRunningColor
+69244>>>            Set Color to clGray
+69245>>>        End_Procedure
+69246>>>        
+69246>>>        Procedure SetSuccessColor
+69249>>>            Set Color to clLime
+69250>>>        End_Procedure
+69251>>>        
+69251>>>        Procedure SetFailedColor
+69254>>>            Set Color to clRed
+69255>>>        End_Procedure
+69256>>>    End_Object
+69257>>>
+69257>>>    Object oRunTestsButton is a Button
+69259>>>        Set Size to 30 200
+69260>>>        Set Location to 13 13
+69261>>>        Set Label to "Run tests!"
+69262>>>        Set Typeface to "verdana"
+69263>>>        Set FontSize to 20 10
+69264>>>    
+69264>>>        Procedure OnClick
+69267>>>            Send Execute to oTestFixtureRunner
+69268>>>        End_Procedure
+69269>>>    
+69269>>>    End_Object
+69270>>>
+69270>>>End_Object
+69271>>>
+69271>>>Use oVDFUnitTests.pkg
+Including file: oVDFUnitTests.pkg    (C:\work\VDFUnit\Libraries\VDFUnit\AppSrc\oVDFUnitTests.pkg)
+69271>>>>>Use cTestFixture.pkg
+69271>>>>>Use cTest.pkg
+69271>>>>>
+69271>>>>>Object cObjectNameMixinTest is a cTestFixture
+69273>>>>>    Object LastPartAfterFullStop_Tests is a cTest
+69275>>>>>        Procedure Test
+69278>>>>>            Send AssertSAreEqual "Lastname" (LastPartAfterFullStop(Self, "Firstname.Lastname"))
+69279>>>>>            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, "."))
+69280>>>>>            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, ".."))
+69281>>>>>            Send AssertSAreEqual "" (LastPartAfterFullStop(Self, ""))
+69282>>>>>        End_Procedure
+69283>>>>>    End_Object
+69284>>>>>    
+69284>>>>>    Object LastPartOfObjectName_Tests is a cTest
+69286>>>>>        Procedure Test
+69289>>>>>            Send AssertSAreEqual (Uppercase("LastPartOfObjectName_Tests")) (LastPartOfObjectName(Self, Self))
+69290>>>>>        End_Procedure
+69291>>>>>    End_Object
+69292>>>>>End_Object
+69293>>>
+69293>>>Object oTestFixtureCatalog is a cTestFixtureCatalog
+69295>>>    Set phTestFixtureNeighborhood to (Parent(Self))
+69296>>>    Send InitTestFixtureCatalog
+69297>>>    
+69297>>>    Procedure ListTestFixtures
+69300>>>        String sTestFixtureName
+69300>>>        Handle hTestFixture
+69300>>>        
+69300>>>        Send IteratorReset
+69301>>>        While (IteratorMoveNext(Self))
+69305>>>            Get CurrentTestFixture to hTestFixture
+69306>>>            Get ObjectName of hTestFixture to sTestFixtureName
+69307>>>            Send ShowText to VDFUnitTestRunner_vw sTestFixtureName
+69308>>>        Loop
+69309>>>>
+69309>>>    End_Procedure
+69310>>>End_Object
+69311>>>
+69311>>>Object oTestFixtureRunner is a cTestFixtureRunner
+69313>>>    Procedure Execute
+69316>>>        Indicate Err False
+69317>>>        Handle hOutputBox
+69317>>>        Move (oOutputBox(VDFUnitTestRunner_vw(Self))) to hOutputBox
+69318>>>        Send SetRunningColor to hOutputBox
+69319>>>        Send RunTestFixtures to oTestFixtureRunner
+69320>>>        If (Err) Begin
+69322>>>            Send SetFailedColor to hOutputBox
+69323>>>        End
+69323>>>>
+69323>>>        Else Begin
+69324>>>            Send SetSuccessColor to hOutputBox
+69325>>>        End
+69325>>>>
+69325>>>    End_Procedure
+69326>>>    
+69326>>>    Set phTestFixtureCatalog to (oTestFixtureCatalog(Self))
+69327>>>End_Object
+69328>>>
+69328>>>Procedure ListTestFixtures
+69331>>>    Send ListTestFixtures to oTestFixtureCatalog
+69332>>>End_Procedure
+69333>>>
+69333>>>Procedure Execute
+69336>>>    Send Execute to oTestFixtureRunner
+69337>>>End_Procedure
+69338>    End_Object
+69339>    
+69339>    Procedure End_Construct_Object
+69342>        Forward Send End_Construct_Object
+69344>        Handle hoClient
+69344>        Get Client_Id to hoClient
+69345>        Send Activate_VDFUnitTestRunner_vw of hoClient
+69346>        Send ListTestFixtures to (VDFUnitTestRunner_vw(hoClient))
+69347>        If (pbAutoRunTests(Self)) Send Execute to (VDFUnitTestRunner_vw(hoClient))
+69350>    End_Procedure
+69351>
+69351>End_Object
+69352>
+69352>Start_UI
+69353>
 Summary
 Memory Available: 2147483647
 Total Warnings : 0
 Total Errors   : 0
-Total Symbols  : 29808
+Total Symbols  : 39870
 Total Resources: 0
-Total Commands : 50285
+Total Commands : 69352
 Total Windows  : 1
 Total Pages    : 1
-Static Data    : 330853
-Message area   : 326675
-Total Blocks   : 18488
+Static Data    : 415669
+Message area   : 476813
+Total Blocks   : 24899

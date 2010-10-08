@@ -1,0 +1,55 @@
+Use cArrayIterator.pkg
+
+//String array instantiation class of cArrayIterator
+Class cArrayIteratorString is a cArrayIterator
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        {Visibility = Private}
+        Property String[] psArray
+    End_Procedure // Construct_Object
+    
+    //Attaches an array variable to the cArrayIterator object. After updating
+    //the array, this procedure needs to be called before using any part of the
+    //iterator interface. 
+    //@param iArray Integer Array variable to attach
+    Procedure AttachArray String[] sArray
+        set psArray to sArray
+    End_Procedure // AttachArray
+
+    //Find next element in collection
+    //@return If next element is found: True. If not: False
+    //Doc/ Interface=Public
+    Function IteratorMoveNext Returns Boolean
+        Integer iCurrent
+        String[] sArray
+        get psArray to sArray
+        //Implement code to find next element in collection, then set piCurrent
+        //to point to this element. Return true if found.
+        get piCurrent to iCurrent
+        If (iCurrent >= (SizeOfArray(sArray) - 1)) Function_return False
+        Else Begin
+            Set piCurrent to (iCurrent + 1)
+            Function_Return True
+        End
+    End_Function // IteratorReset
+    
+    //Add element to collection
+    //Doc/ Interface=Public
+    Procedure AddToArray String sValue
+        String[] sArray
+        Get psArray to sArray
+        Move sValue to sArray[SizeOfArray(sArray)]
+        Set psArray to sArray
+    End_Procedure
+    
+    //Returns current array value
+    //Doc/ Interface=Public
+    Function CurrentArrayValue Returns String
+        Integer iCurrent
+        String[] sArray
+        Get psArray to sArray
+        Get piCurrent to iCurrent
+        Function_Return sArray[iCurrent]
+    End_Function
+    
+End_Class	// cArrayIteratorString

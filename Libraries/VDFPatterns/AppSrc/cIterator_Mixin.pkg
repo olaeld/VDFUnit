@@ -1,0 +1,62 @@
+//Iterator pattern interface. Classes importing this class protocol need to 
+//implement the IteratorMoveNext function.
+//
+//
+//@author Ola Eld›y
+Use VdfBase.pkg
+
+Class cIterator_Mixin is a Mixin
+
+    //Doc/ Interface=Private
+    Procedure Define_cIterator_Mixin
+        { Visibility=Private }
+        //Points to the current element in the collection. This can be used as
+        //an object handle, an item number, a Recnum or whatever (as long as
+        //it's an integer (a handle is also an integer).
+        Property Integer piCurrent
+    End_Procedure // Construct_Object
+    
+    Procedure IteratorReset_Mixin
+        set piCurrent to -1
+    End_Procedure
+    
+    //Resets to first element in collection
+    //Doc/ Interface=Public
+    Procedure IteratorReset
+        Send IteratorReset_Mixin
+    End_Procedure // IteratorReset
+    
+    //Find next element in collection
+    //@return If next element is found: True. If not: False
+    //Doc/ Interface=Public
+    Function IteratorMoveNext Returns Boolean
+        //Implement code to find next element in collection, then set piCurrent
+        //to point to this element. Return true if found.
+        Function_return False
+    End_Function // IteratorReset
+    
+    Function IteratorCurrent_Mixin Returns Integer
+        Function_Return (piCurrent(self))
+    End_Function
+    
+    //Doc/Interface=Public
+    //@return Points to current element 
+    Function IteratorCurrent Returns Integer
+        Function_Return (IteratorCurrent_Mixin(self))
+    End_Function // IteratorCurrent
+    
+End_Class
+
+//Here is the syntax for using this Mixin class in your own class:
+//
+//Use cIterator_Mixin.pkg // our mixin class package
+//Class cYourClass is a cSomething
+//    Procedure Construct_Object
+//        Forward Send Construct_Object
+//        :
+//        send Define_cIterator_Mixin // Constructor method
+//    End_Procedure
+//    :
+//    Import_Class_Protocol cIterator_Mixin
+//    :
+//End_Class
