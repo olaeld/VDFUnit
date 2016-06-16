@@ -1,9 +1,9 @@
 <classList xmlns="http://www.dataaccess.com/VisualDataFlex/2006/classlist/">
-	<VDFLibraryTimeStamp>2009-02-27T00:54:12</VDFLibraryTimeStamp>
+	<VDFLibraryTimeStamp>2010-08-03T12:22:10</VDFLibraryTimeStamp>
 	<libraries>
 		<library>
-			<libraryPath>..\Libraries\VDFUnit\VDFUnit.sws</libraryPath>
-			<libraryTimeStamp>2009-09-24T10:43:56</libraryTimeStamp>
+			<libraryPath>..\Libraries\VDFUnit\VDFUnit160.sws</libraryPath>
+			<libraryTimeStamp>2010-10-08T11:30:47</libraryTimeStamp>
 			<libraryID>Lib1</libraryID>
 		</library>
 	</libraries>
@@ -73,7 +73,7 @@
 		</class>
 		<class>
 			<className>Grid</className>
-			<image>ControlGrid.ico</image>
+			<image>ControlGrid_Depreciated.ico</image>
 			<package>Windows.pkg</package>
 			<groupName>Base Controls</groupName>
 			<libraryID>0</libraryID>
@@ -220,14 +220,14 @@
 		</class>
 		<class>
 			<className>dbGrid</className>
-			<image>ControldbGrid.ico</image>
+			<image>ControldbGrid_Depreciated.ico</image>
 			<package>dfTable.pkg</package>
 			<groupName>Data Controls</groupName>
 			<libraryID>0</libraryID>
 		</class>
 		<class>
 			<className>dbList</className>
-			<image>ControldbList.ico</image>
+			<image>ControldbList_Depreciated.ico</image>
 			<package>dfSelLst.pkg</package>
 			<groupName>Data Controls</groupName>
 			<libraryID>0</libraryID>
@@ -545,6 +545,55 @@
 			<image>ControlLinkLabel.ico</image>
 			<package>cLinkLabel.pkg</package>
 			<groupName>Base Controls</groupName>
+			<libraryID>0</libraryID>
+		</class>
+		<class>
+			<className>cCJGrid</className>
+			<image>ControlGrid.ico</image>
+			<package>cCJGrid.pkg</package>
+			<groupName>Base Controls</groupName>
+			<libraryID>0</libraryID>
+		</class>
+		<class>
+			<className>cCJGridColumn</className>
+			<image>ControlGridColumn.ico</image>
+			<package>cCJGridColumn.pkg</package>
+			<groupName>Base Controls</groupName>
+			<libraryID>0</libraryID>
+		</class>
+		<class>
+			<className>cCJGridColumnRowIndicator</className>
+			<image>ControlGridColumnRowIndicator.ico</image>
+			<package>cCJGridColumnRowIndicator.pkg</package>
+			<groupName>Base Controls</groupName>
+			<libraryID>0</libraryID>
+		</class>
+		<class>
+			<className>cDbCJGrid</className>
+			<image>ControldbGrid.ico</image>
+			<package>cDbCJGrid.pkg</package>
+			<groupName>Data Controls</groupName>
+			<libraryID>0</libraryID>
+		</class>
+		<class>
+			<className>cDbCJGridColumn</className>
+			<image>ControldbGridColumn.ico</image>
+			<package>cDbCJGridColumn.pkg</package>
+			<groupName>Data Controls</groupName>
+			<libraryID>0</libraryID>
+		</class>
+		<class>
+			<className>cDbCJGridPromptList</className>
+			<image>ControldbList.ico</image>
+			<package>cDbCJGridPromptList.pkg</package>
+			<groupName>Data Controls</groupName>
+			<libraryID>0</libraryID>
+		</class>
+		<class>
+			<className>cIdleHandler</className>
+			<image>ControlIdleHandler.ico</image>
+			<package>Windows.pkg</package>
+			<groupName>Others</groupName>
 			<libraryID>0</libraryID>
 		</class>
 	</classes>

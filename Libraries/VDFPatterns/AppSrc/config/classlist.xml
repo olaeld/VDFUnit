@@ -1,12 +1,5 @@
 <classList xmlns="http://www.dataaccess.com/VisualDataFlex/2006/classlist/">
-	<VDFLibraryTimeStamp>2010-08-03T12:22:10</VDFLibraryTimeStamp>
-	<libraries>
-		<library>
-			<libraryPath>..\VDFPatterns\VDFPatterns160.sws</libraryPath>
-			<libraryTimeStamp>2010-10-08T11:27:37</libraryTimeStamp>
-			<libraryID>Lib1</libraryID>
-		</library>
-	</libraries>
+	<VDFLibraryTimeStamp>2010-08-03T12:22:10</VDFLibraryTimeStamp><libraries></libraries>
 	<classes>
 		<class>
 			<className>BitmapContainer</className>
@@ -471,13 +464,6 @@
 			<libraryID>0</libraryID>
 		</class>
 		<class>
-			<className>cToolTipController</className>
-			<image>ControlToolTip.ico</image>
-			<package>cToolTipController.pkg</package>
-			<groupName>Others</groupName>
-			<libraryID>0</libraryID>
-		</class>
-		<class>
 			<className>cCJMenuBar</className>
 			<image>ControlCJMenuBar.ico</image>
 			<package>cCJCommandBarSystem.pkg</package>
@@ -510,6 +496,13 @@
 			<image>ControlCJContextMenu.ico</image>
 			<package>cCJCommandBarSystem.pkg</package>
 			<groupName>Menus and Toolbars</groupName>
+			<libraryID>0</libraryID>
+		</class>
+		<class>
+			<className>cToolTipController</className>
+			<image>ControlToolTip.ico</image>
+			<package>cToolTipController.pkg</package>
+			<groupName>Others</groupName>
 			<libraryID>0</libraryID>
 		</class>
 		<class>

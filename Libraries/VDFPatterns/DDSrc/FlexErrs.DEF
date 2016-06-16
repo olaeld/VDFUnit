@@ -1,0 +1,26 @@
+-----------------------------------------------------------------------------
+  DATE: 07/23/2007      TIME: 08:51                                  PAGE:  1
+  FILE DEFINITION FOR FILE: FlexErrs (# 50)
+-----------------------------------------------------------------------------
+  DRIVER NAME               : DATAFLEX
+  FILE ROOT NAME            : FlexErrs
+  USER DISPLAY NAME         : @DataFlex Error Table
+  DATAFLEX FILE NAME        : FlexErrs
+-----------------------------------------------------------------------------
+  RECORD LENGTH             : 64        ( USED: 64 )
+  MAX NUMBER OF RECORDS     : 125       ( USED: 120 )
+  FILE COMPRESSION          : NONE
+  RE-USE DELETED SPACE      : YES
+  LOCKING TYPE              : FILE
+  HEADER INTEGRITY CHECKING : NO 
+  TRANSACTION TYPE          : CLIENT ATOMIC
+  RECORD IDENTITY INDEX     : 0 ( 0 , 0 )
+  FILE LOGIN PARAMETER      : 
+  SYSTEM FILE               : NO 
+-----------------------------------------------------------------------------
+
+NUM  FIELD NAME       TYPE SIZE  OFFST IX   RELATES TO FILE.FIELD
+---  ---------------  ---- ----- ----- --   ---------------------------------
+  1  Error_Descr      ASC     40     1      
+  2  Note             ASC     24    41      
+

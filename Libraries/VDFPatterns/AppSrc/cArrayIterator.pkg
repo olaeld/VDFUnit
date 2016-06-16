@@ -1,0 +1,30 @@
+Use cIterator_Mixin.pkg
+
+//This is an iterator object that attaches to an array. Use the procedure
+//AttachArray to attach an array variable. Then the Iterator interface is
+//available for the array by using the cArrayIterator object.
+//The class is abstract, and needs to be instantiated by using the various
+//array type subclasses, e.g. cArrayIteratorString, cArrayIteratorInteger
+//Doc/Classtype=Abstract 
+Class cArrayIterator is a cObject
+    //Doc/Interface=Private
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        send Define_cIterator_Mixin // Constructor method
+        
+        {Visibility = Private}
+        Property Integer piArrayType
+        {Visibility = Private}
+        Property String[] psArray
+    End_Procedure
+    
+    Import_Class_Protocol cIterator_Mixin
+    
+    //Attaches an array variable to the cArrayIterator object.
+    //This procedure has to be instantiated in the various array type subclasses
+    //Doc/Interface=Virtual
+    Procedure AttachArray
+        
+    End_Procedure // AttachArray
+     
+End_Class	// cArrayIterator

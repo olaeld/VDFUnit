@@ -1,0 +1,61 @@
+Use cArrayIterator.pkg
+
+//Integer array instantiation class of cArrayIterator
+Class cArrayIteratorInteger is a cArrayIterator
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        {Visibility = Private}
+        Property Integer[] piArray
+    End_Procedure // Construct_Object
+    
+    //Attaches an array variable to the cArrayIterator object. After updating
+    //the array, this procedure needs to be called before using any part of the
+    //iterator interface. 
+    //@param iArray Integer Array variable to attach
+    Procedure AttachArray Integer[] iArray
+        set piArray to iArray
+    End_Procedure // AttachArray
+    
+    Function RetrieveArray Returns Integer[]
+        Integer[] iArray
+        Get piArray to iArray
+        Function_Return iArray
+    End_Function
+
+    //Find next element in collection
+    //@return If next element is found: True. If not: False
+    //Doc/ Interface=Public
+    Function IteratorMoveNext Returns Boolean
+        Integer iCurrent
+        Integer[] iArray
+        get piArray to iArray
+        //Implement code to find next element in collection, then set piCurrent
+        //to point to this element. Return true if found.
+        get piCurrent to iCurrent
+        If (iCurrent >= (SizeOfArray(iArray) - 1)) Function_return False
+        Else Begin
+            Set piCurrent to (iCurrent + 1)
+            Function_Return True
+        End
+    End_Function // IteratorReset
+    
+    //Add element to collection
+    //Doc/ Interface=Public
+    Procedure AddToArray Integer iValue
+        Integer[] iArray
+        Get piArray to iArray
+        Move iValue to iArray[SizeOfArray(iArray)]
+        Set piArray to iArray
+    End_Procedure
+    
+    //Returns current array value
+    //Doc/ Interface=Public
+    Function CurrentArrayValue Returns Integer
+        Integer iCurrent
+        Integer[] iArray
+        get piArray to iArray
+        get piCurrent to iCurrent
+        Function_Return iArray[iCurrent]
+    End_Function
+    
+End_Class   // cArrayIteratorInteger
